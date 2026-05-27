@@ -67,6 +67,25 @@ STATUS_SENSORS: tuple[RetroArchSensorDescription, ...] = (
 )
 
 
+CONFIG_SENSORS: tuple[SensorEntityDescription, ...] = (
+    SensorEntityDescription(
+        key="video_driver",
+        name="Video driver",
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        key="audio_driver",
+        name="Audio driver",
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        key="menu_driver",
+        name="Menu driver",
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+)
+
+
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: RetroArchConfigEntry,
@@ -79,6 +98,9 @@ async def async_setup_entry(
     ]
     for ram in entry.options.get(CONF_RAM_SENSORS, []):
         entities.append(RetroArchRamSensor(coordinator, ram))
+    entities.extend(
+        RetroArchConfigSensor(coordinator, description) for description in CONFIG_SENSORS
+    )
     async_add_entities(entities)
 
 
@@ -109,6 +131,23 @@ class RetroArchSensor(RetroArchEntity, SensorEntity):
     @property
     def native_value(self) -> StateType:
         return self.entity_description.value_fn(self.coordinator.data)
+
+
+class RetroArchConfigSensor(RetroArchEntity, SensorEntity):
+    """A diagnostic sensor reading a cached retroarch.cfg parameter."""
+
+    def __init__(
+        self,
+        coordinator: RetroArchDataUpdateCoordinator,
+        description: SensorEntityDescription,
+    ) -> None:
+        super().__init__(coordinator)
+        self.entity_description = description
+        self._attr_unique_id = f"{coordinator.config_entry.entry_id}_cfg_{description.key}"
+
+    @property
+    def native_value(self) -> StateType:
+        return self.coordinator.data.config.get(self.entity_description.key)
 
 
 class RetroArchRamSensor(RetroArchEntity, SensorEntity):

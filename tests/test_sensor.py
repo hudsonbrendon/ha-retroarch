@@ -27,6 +27,9 @@ async def _setup(hass, status, options=None):
     ), patch(
         "custom_components.retroarch.coordinator.RetroArchClient.async_read_memory",
         new=AsyncMock(return_value=[0x05]),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_config_param",
+        new=AsyncMock(side_effect=lambda name: status.config.get(name)),
     ):
         assert await hass.config_entries.async_setup(entry.entry_id)
         await hass.async_block_till_done()
@@ -67,3 +70,13 @@ def test_decode_unsigned_big_endian():
 
 def test_decode_scaled_returns_float():
     assert _decode([0x0A], signed=False, big_endian=False, scale=0.5) == 5.0
+
+
+async def test_config_param_sensor(hass):
+    status = RetroArchStatus(
+        available=True, state="playing", system="nes", game="Metroid",
+        config={"video_driver": "gl", "audio_driver": "alsa", "menu_driver": "ozone"},
+    )
+    await _setup(hass, status)
+    state = hass.states.get("sensor.retroarch_video_driver")
+    assert state.state == "gl"
