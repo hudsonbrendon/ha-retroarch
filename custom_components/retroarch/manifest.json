@@ -1,6 +1,7 @@
 {
   "domain": "retroarch",
   "name": "RetroArch",
+  "after_dependencies": ["network"],
   "codeowners": ["@hudsonbrendon"],
   "config_flow": true,
   "documentation": "https://github.com/hudsonbrendon/ha-retroarch",
