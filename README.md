@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="custom_components/retroarch/brand/dark_logo.png">
+    <img src="custom_components/retroarch/brand/logo.png" alt="RetroArch" width="480">
+  </picture>
+</p>
+
 # RetroArch — Home Assistant Integration
 
 Control and monitor a [RetroArch](https://www.retroarch.com/) instance from Home Assistant over its UDP Network Control Interface.
