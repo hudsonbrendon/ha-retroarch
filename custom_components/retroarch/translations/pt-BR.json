@@ -1,0 +1,72 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "RetroArch",
+        "menu_options": {
+          "discover": "Procurar na rede automaticamente",
+          "manual": "Inserir os dados de conexão manualmente"
+        }
+      },
+      "discover": {
+        "title": "Instâncias do RetroArch encontradas",
+        "description": "Escolha uma instância do RetroArch encontrada na sua rede.",
+        "data": {
+          "host": "Host",
+          "port": "Porta",
+          "name": "Nome"
+        }
+      },
+      "manual": {
+        "title": "Conectar ao RetroArch",
+        "description": "Ative a interface de comandos de rede no retroarch.cfg (network_cmd_enable = true).",
+        "data": {
+          "host": "Host",
+          "port": "Porta",
+          "name": "Nome"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Não foi possível alcançar o RetroArch. Verifique host, porta e se os comandos de rede estão ativados."
+    },
+    "abort": {
+      "already_configured": "Esta instância do RetroArch já está configurada."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opções do RetroArch",
+        "menu_options": {
+          "settings": "Configurações de polling",
+          "add_ram_sensor": "Adicionar sensor de RAM",
+          "remove_ram_sensor": "Remover sensor de RAM"
+        }
+      },
+      "settings": {
+        "data": {
+          "scan_interval": "Intervalo de polling (segundos)"
+        }
+      },
+      "add_ram_sensor": {
+        "title": "Adicionar sensor de RAM",
+        "data": {
+          "name": "Nome do sensor",
+          "address": "Endereço de memória (hex, ex.: 7e0019)",
+          "size": "Número de bytes",
+          "signed": "Valor com sinal",
+          "big_endian": "Ordem big-endian",
+          "scale": "Fator de escala",
+          "unit": "Unidade de medida"
+        }
+      },
+      "remove_ram_sensor": {
+        "title": "Remover sensor de RAM",
+        "data": {
+          "name": "Sensor a remover"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "RetroArch",
+        "menu_options": {
+          "discover": "Search the network automatically",
+          "manual": "Enter connection details manually"
+        }
+      },
+      "discover": {
+        "title": "Discovered RetroArch instances",
+        "description": "Pick a RetroArch instance found on your network.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "name": "Name"
+        }
+      },
+      "manual": {
+        "title": "Connect to RetroArch",
+        "description": "Enable the Network Control Interface in retroarch.cfg (network_cmd_enable = true).",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "name": "Name"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not reach RetroArch. Check the host, port, and that network commands are enabled."
+    },
+    "abort": {
+      "already_configured": "This RetroArch instance is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "RetroArch options",
+        "menu_options": {
+          "settings": "Polling settings",
+          "add_ram_sensor": "Add a RAM sensor",
+          "remove_ram_sensor": "Remove a RAM sensor"
+        }
+      },
+      "settings": {
+        "data": {
+          "scan_interval": "Polling interval (seconds)"
+        }
+      },
+      "add_ram_sensor": {
+        "title": "Add RAM sensor",
+        "data": {
+          "name": "Sensor name",
+          "address": "Memory address (hex, e.g. 7e0019)",
+          "size": "Number of bytes",
+          "signed": "Signed value",
+          "big_endian": "Big-endian byte order",
+          "scale": "Scale factor",
+          "unit": "Unit of measurement"
+        }
+      },
+      "remove_ram_sensor": {
+        "title": "Remove RAM sensor",
+        "data": {
+          "name": "Sensor to remove"
+        }
+      }
+    }
+  }
+}

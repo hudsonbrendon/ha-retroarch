@@ -1,0 +1,12 @@
+{
+  "domain": "retroarch",
+  "name": "RetroArch",
+  "codeowners": ["@hudsonbrendon"],
+  "config_flow": true,
+  "documentation": "https://github.com/hudsonbrendon/ha-retroarch",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/hudsonbrendon/ha-retroarch/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}
