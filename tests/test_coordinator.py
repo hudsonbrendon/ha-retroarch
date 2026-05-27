@@ -44,3 +44,26 @@ async def test_coordinator_skips_version_when_unavailable(hass):
     assert data.available is False
     client.async_get_version.assert_not_called()
     client.async_read_memory.assert_not_called()
+
+
+async def test_coordinator_fetches_config_once(hass):
+    client = AsyncMock()
+    client.async_get_status.return_value = RetroArchStatus(available=True, state="playing")
+    client.async_get_version.return_value = "1.19.1"
+    client.async_get_config_param.side_effect = lambda name: {
+        "video_driver": "gl",
+        "audio_driver": "alsa",
+        "menu_driver": "ozone",
+    }.get(name)
+
+    coordinator = RetroArchDataUpdateCoordinator(
+        hass, client=client, name="RetroArch", scan_interval=5, ram_sensors=[]
+    )
+
+    data = await coordinator._async_update_data()
+    assert data.config["video_driver"] == "gl"
+    assert data.config["menu_driver"] == "ozone"
+
+    client.async_get_config_param.reset_mock()
+    await coordinator._async_update_data()
+    client.async_get_config_param.assert_not_called()
