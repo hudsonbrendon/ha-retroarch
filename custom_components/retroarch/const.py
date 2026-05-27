@@ -16,8 +16,6 @@ MANUFACTURER: Final = "libretro"
 # --- Status / info commands ---
 CMD_VERSION: Final = "VERSION"
 CMD_GET_STATUS: Final = "GET_STATUS"
-CMD_GET_CONFIG_PARAM: Final = "GET_CONFIG_PARAM"
-
 # --- Memory commands ---
 CMD_READ_CORE_RAM: Final = "READ_CORE_RAM"
 CMD_WRITE_CORE_RAM: Final = "WRITE_CORE_RAM"

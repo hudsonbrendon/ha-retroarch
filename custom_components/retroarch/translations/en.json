@@ -35,6 +35,9 @@
     }
   },
   "options": {
+    "abort": {
+      "no_ram_sensors": "There are no RAM sensors to remove."
+    },
     "step": {
       "init": {
         "title": "RetroArch options",

@@ -69,6 +69,7 @@ class RetroArchMediaPlayer(RetroArchEntity, MediaPlayerEntity):
         await self.coordinator.client.send_command("CLOSE_CONTENT")
 
     async def async_mute_volume(self, mute: bool) -> None:
+        # RetroArch only exposes a mute TOGGLE; the desired `mute` state can't be set directly.
         await self.coordinator.client.send_command("MUTE")
 
     async def async_volume_up(self) -> None:

@@ -8,6 +8,7 @@ from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.retroarch.api import RetroArchStatus
 from custom_components.retroarch.const import CONF_RAM_SENSORS, DOMAIN
+from custom_components.retroarch.sensor import _decode
 
 from .const import MOCK_CONFIG
 
@@ -54,3 +55,15 @@ async def test_ram_sensor_reports_value(hass):
     state = hass.states.get("sensor.retroarch_lives")
     assert state.state == "5"
     assert state.attributes["unit_of_measurement"] == "lives"
+
+
+def test_decode_signed_little_endian():
+    assert _decode([0xFF], signed=True, big_endian=False, scale=1.0) == -1
+
+
+def test_decode_unsigned_big_endian():
+    assert _decode([0x01, 0x00], signed=False, big_endian=True, scale=1.0) == 256
+
+
+def test_decode_scaled_returns_float():
+    assert _decode([0x0A], signed=False, big_endian=False, scale=0.5) == 5.0

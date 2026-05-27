@@ -12,7 +12,7 @@ from homeassistant.core import (
 from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import config_validation as cv
 
-from .const import DOMAIN
+from .const import CMD_LOAD_CORE, CMD_LOAD_STATE_SLOT, CMD_SET_SHADER, CMD_SHOW_MSG, DOMAIN
 
 ATTR_CONFIG_ENTRY_ID = "config_entry_id"
 ATTR_COMMAND = "command"
@@ -79,19 +79,19 @@ def async_setup_services(hass: HomeAssistant) -> None:
 
     async def handle_show_message(call: ServiceCall) -> None:
         coordinator = _get_coordinator(hass, call)
-        await coordinator.client.send_command(f"SHOW_MSG {call.data[ATTR_MESSAGE]}")
+        await coordinator.client.send_command(f"{CMD_SHOW_MSG} {call.data[ATTR_MESSAGE]}")
 
     async def handle_load_state_slot(call: ServiceCall) -> None:
         coordinator = _get_coordinator(hass, call)
-        await coordinator.client.send_command(f"LOAD_STATE_SLOT {call.data[ATTR_SLOT]}")
+        await coordinator.client.send_command(f"{CMD_LOAD_STATE_SLOT} {call.data[ATTR_SLOT]}")
 
     async def handle_set_shader(call: ServiceCall) -> None:
         coordinator = _get_coordinator(hass, call)
-        await coordinator.client.send_command(f"SET_SHADER {call.data[ATTR_PATH]}")
+        await coordinator.client.send_command(f"{CMD_SET_SHADER} {call.data[ATTR_PATH]}")
 
     async def handle_load_core(call: ServiceCall) -> None:
         coordinator = _get_coordinator(hass, call)
-        await coordinator.client.send_command(f"LOAD_CORE {call.data[ATTR_PATH]}")
+        await coordinator.client.send_command(f"{CMD_LOAD_CORE} {call.data[ATTR_PATH]}")
 
     hass.services.async_register(DOMAIN, SERVICE_SEND_COMMAND, handle_send_command, schema=SEND_COMMAND_SCHEMA)
     hass.services.async_register(
