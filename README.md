@@ -45,6 +45,7 @@ values, box art, and LAN auto-discovery.
 - 🩺 **Diagnostics** — driver sensors (video/audio/menu) plus downloadable config-entry
   diagnostics.
 - 🏠 **Local polling** — no cloud; talks straight to RetroArch on your network.
+- 🌐 **Localized** — UI, entities, and services translated to English, Português (Brasil), and Español.
 
 ## Requirements
 
