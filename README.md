@@ -12,6 +12,10 @@ Control and monitor a [RetroArch](https://www.retroarch.com/) instance from Home
 - **Auto-discovery** — finds RetroArch instances on your LAN via a UDP `VERSION` broadcast probe; manual host/port entry as fallback.
 - **Configurable RAM sensors** — read live game values (lives, score, HP…) by memory address via the Options flow.
 - **Services** — `retroarch.send_command`, `retroarch.read_memory` (returns data), `retroarch.write_memory`, `retroarch.show_message`, `retroarch.load_state_slot`, `retroarch.set_shader`, `retroarch.load_core`.
+- **Box art** — the media player shows the game's cover from the libretro thumbnail server (best-effort by system + ROM name; override the system folder or disable it in the Options flow).
+- **Diagnostic config sensors** — video/audio/menu driver, read via `GET_CONFIG_PARAM`.
+- **Reconfigure** — change host/port from the integration's ⋮ menu without removing it.
+- **Diagnostics** — downloadable config-entry diagnostics (host redacted).
 
 ## RetroArch setup
 

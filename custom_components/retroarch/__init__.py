@@ -9,7 +9,6 @@ from .const import (
     CONF_RAM_SENSORS,
     DEFAULT_NAME,
     DEFAULT_SCAN_INTERVAL,
-    DOMAIN,
 )
 from .coordinator import RetroArchConfigEntry, RetroArchDataUpdateCoordinator
 
