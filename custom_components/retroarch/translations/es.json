@@ -1,0 +1,361 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "RetroArch",
+        "menu_options": {
+          "discover": "Buscar en la red automáticamente",
+          "manual": "Introducir los datos de conexión manualmente"
+        }
+      },
+      "discover": {
+        "title": "Instancias de RetroArch encontradas",
+        "description": "Elige una instancia de RetroArch encontrada en tu red.",
+        "data": {
+          "host": "Host",
+          "port": "Puerto",
+          "name": "Nombre"
+        }
+      },
+      "manual": {
+        "title": "Conectar a RetroArch",
+        "description": "Activa la interfaz de comandos de red en retroarch.cfg (network_cmd_enable = true).",
+        "data": {
+          "host": "Host",
+          "port": "Puerto",
+          "name": "Nombre"
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigurar RetroArch",
+        "description": "Actualiza el host y el puerto de esta instancia de RetroArch.",
+        "data": {
+          "host": "Host",
+          "port": "Puerto",
+          "name": "Nombre"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "No se pudo conectar con RetroArch. Verifica el host, el puerto y que los comandos de red estén activados."
+    },
+    "abort": {
+      "already_configured": "Esta instancia de RetroArch ya está configurada.",
+      "reconfigure_successful": "RetroArch reconfigurado correctamente."
+    }
+  },
+  "options": {
+    "abort": {
+      "no_ram_sensors": "No hay sensores de RAM para eliminar."
+    },
+    "step": {
+      "init": {
+        "title": "Opciones de RetroArch",
+        "menu_options": {
+          "settings": "Ajustes de sondeo",
+          "box_art": "Carátula",
+          "add_ram_sensor": "Añadir sensor de RAM",
+          "remove_ram_sensor": "Eliminar sensor de RAM"
+        }
+      },
+      "settings": {
+        "data": {
+          "scan_interval": "Intervalo de sondeo (segundos)"
+        }
+      },
+      "box_art": {
+        "title": "Carátula",
+        "data": {
+          "box_art_enabled": "Mostrar la carátula en el reproductor multimedia",
+          "box_art_system": "Sobrescribir la carpeta de sistema de libretro (opcional, p. ej. Nintendo - Super Nintendo Entertainment System)"
+        }
+      },
+      "add_ram_sensor": {
+        "title": "Añadir sensor de RAM",
+        "data": {
+          "name": "Nombre del sensor",
+          "address": "Dirección de memoria (hex, p. ej. 7e0019)",
+          "size": "Número de bytes",
+          "signed": "Valor con signo",
+          "big_endian": "Orden de bytes big-endian",
+          "scale": "Factor de escala",
+          "unit": "Unidad de medida"
+        }
+      },
+      "remove_ram_sensor": {
+        "title": "Eliminar sensor de RAM",
+        "data": {
+          "name": "Sensor a eliminar"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "Estado"
+      },
+      "game": {
+        "name": "Juego"
+      },
+      "system": {
+        "name": "Sistema"
+      },
+      "crc32": {
+        "name": "CRC32 del contenido"
+      },
+      "version": {
+        "name": "Versión"
+      },
+      "video_driver": {
+        "name": "Controlador de vídeo"
+      },
+      "audio_driver": {
+        "name": "Controlador de audio"
+      },
+      "menu_driver": {
+        "name": "Controlador de menú"
+      }
+    },
+    "binary_sensor": {
+      "playing": {
+        "name": "Jugando"
+      },
+      "paused": {
+        "name": "En pausa"
+      },
+      "content_loaded": {
+        "name": "Contenido cargado"
+      }
+    },
+    "button": {
+      "pause_toggle": {
+        "name": "Pausar/Reanudar"
+      },
+      "reset": {
+        "name": "Reiniciar"
+      },
+      "frame_advance": {
+        "name": "Avanzar fotograma"
+      },
+      "save_state": {
+        "name": "Guardar estado"
+      },
+      "load_state": {
+        "name": "Cargar estado"
+      },
+      "state_slot_plus": {
+        "name": "Ranura de estado +"
+      },
+      "state_slot_minus": {
+        "name": "Ranura de estado -"
+      },
+      "screenshot": {
+        "name": "Captura de pantalla"
+      },
+      "fast_forward": {
+        "name": "Alternar avance rápido"
+      },
+      "rewind": {
+        "name": "Rebobinar"
+      },
+      "slow_motion": {
+        "name": "Cámara lenta"
+      },
+      "ai_service": {
+        "name": "Servicio de IA"
+      },
+      "menu_toggle": {
+        "name": "Alternar menú"
+      },
+      "close_content": {
+        "name": "Cerrar contenido"
+      },
+      "quit": {
+        "name": "Salir de RetroArch"
+      },
+      "disk_eject_toggle": {
+        "name": "Expulsar/insertar disco"
+      },
+      "disk_next": {
+        "name": "Disco siguiente"
+      },
+      "disk_prev": {
+        "name": "Disco anterior"
+      },
+      "shader_next": {
+        "name": "Shader siguiente"
+      },
+      "shader_prev": {
+        "name": "Shader anterior"
+      },
+      "shader_toggle": {
+        "name": "Alternar shader"
+      },
+      "cheat_toggle": {
+        "name": "Alternar truco"
+      },
+      "cheat_index_plus": {
+        "name": "Índice de truco +"
+      },
+      "cheat_index_minus": {
+        "name": "Índice de truco -"
+      },
+      "volume_up": {
+        "name": "Subir volumen"
+      },
+      "volume_down": {
+        "name": "Bajar volumen"
+      },
+      "recording_toggle": {
+        "name": "Alternar grabación"
+      },
+      "streaming_toggle": {
+        "name": "Alternar transmisión"
+      },
+      "fps_toggle": {
+        "name": "Alternar visualización de FPS"
+      },
+      "statistics_toggle": {
+        "name": "Alternar estadísticas"
+      },
+      "game_focus_toggle": {
+        "name": "Alternar foco del juego"
+      },
+      "grab_mouse_toggle": {
+        "name": "Alternar captura del ratón"
+      },
+      "runahead_toggle": {
+        "name": "Alternar run-ahead"
+      },
+      "vrr_runloop_toggle": {
+        "name": "Alternar bucle VRR"
+      }
+    },
+    "switch": {
+      "fast_forward": {
+        "name": "Avance rápido"
+      },
+      "slow_motion": {
+        "name": "Cámara lenta"
+      },
+      "mute": {
+        "name": "Silenciar"
+      },
+      "fullscreen": {
+        "name": "Pantalla completa"
+      },
+      "pause": {
+        "name": "Pausar"
+      }
+    }
+  },
+  "services": {
+    "send_command": {
+      "name": "Enviar comando",
+      "description": "Envía un comando sin procesar de la interfaz de red de RetroArch.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integración",
+          "description": "Instancia de RetroArch de destino."
+        },
+        "command": {
+          "name": "Comando",
+          "description": "El comando de red a enviar, p. ej. RESET."
+        }
+      }
+    },
+    "read_memory": {
+      "name": "Leer memoria",
+      "description": "Lee bytes de la RAM del núcleo en una dirección hexadecimal; devuelve los datos.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integración",
+          "description": "Instancia de RetroArch de destino."
+        },
+        "address": {
+          "name": "Dirección (hex)",
+          "description": "Dirección de memoria en hexadecimal, p. ej. 7e0019."
+        },
+        "size": {
+          "name": "Bytes",
+          "description": "Número de bytes a leer."
+        }
+      }
+    },
+    "write_memory": {
+      "name": "Escribir memoria",
+      "description": "Escribe bytes en la RAM del núcleo en una dirección hexadecimal.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integración",
+          "description": "Instancia de RetroArch de destino."
+        },
+        "address": {
+          "name": "Dirección (hex)",
+          "description": "Dirección de memoria en hexadecimal, p. ej. 7e0019."
+        },
+        "data": {
+          "name": "Datos",
+          "description": "Lista de valores de byte (0-255) a escribir."
+        }
+      }
+    },
+    "show_message": {
+      "name": "Mostrar mensaje",
+      "description": "Muestra un mensaje en pantalla en RetroArch.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integración",
+          "description": "Instancia de RetroArch de destino."
+        },
+        "message": {
+          "name": "Mensaje",
+          "description": "Texto a mostrar."
+        }
+      }
+    },
+    "load_state_slot": {
+      "name": "Cargar ranura de estado",
+      "description": "Carga una ranura de guardado específica.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integración",
+          "description": "Instancia de RetroArch de destino."
+        },
+        "slot": {
+          "name": "Ranura",
+          "description": "Número de ranura de guardado."
+        }
+      }
+    },
+    "set_shader": {
+      "name": "Establecer shader",
+      "description": "Carga un shader por la ruta del archivo.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integración",
+          "description": "Instancia de RetroArch de destino."
+        },
+        "path": {
+          "name": "Ruta",
+          "description": "Ruta del archivo de shader."
+        }
+      }
+    },
+    "load_core": {
+      "name": "Cargar núcleo",
+      "description": "Carga un núcleo de libretro por la ruta del archivo.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integración",
+          "description": "Instancia de RetroArch de destino."
+        },
+        "path": {
+          "name": "Ruta",
+          "description": "Ruta del archivo del núcleo."
+        }
+      }
+    }
+  }
+}

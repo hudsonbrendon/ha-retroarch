@@ -38,29 +38,24 @@ class RetroArchSensorDescription(SensorEntityDescription):
 STATUS_SENSORS: tuple[RetroArchSensorDescription, ...] = (
     RetroArchSensorDescription(
         key="status",
-        name="Status",
         value_fn=lambda data: data.state,
     ),
     RetroArchSensorDescription(
         key="game",
-        name="Game",
         value_fn=lambda data: data.game,
     ),
     RetroArchSensorDescription(
         key="system",
-        name="System",
         value_fn=lambda data: data.system,
     ),
     RetroArchSensorDescription(
         key="crc32",
-        name="Content CRC32",
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
         value_fn=lambda data: data.crc32,
     ),
     RetroArchSensorDescription(
         key="version",
-        name="Version",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda data: data.version,
     ),
@@ -68,21 +63,9 @@ STATUS_SENSORS: tuple[RetroArchSensorDescription, ...] = (
 
 
 CONFIG_SENSORS: tuple[SensorEntityDescription, ...] = (
-    SensorEntityDescription(
-        key="video_driver",
-        name="Video driver",
-        entity_category=EntityCategory.DIAGNOSTIC,
-    ),
-    SensorEntityDescription(
-        key="audio_driver",
-        name="Audio driver",
-        entity_category=EntityCategory.DIAGNOSTIC,
-    ),
-    SensorEntityDescription(
-        key="menu_driver",
-        name="Menu driver",
-        entity_category=EntityCategory.DIAGNOSTIC,
-    ),
+    SensorEntityDescription(key="video_driver", entity_category=EntityCategory.DIAGNOSTIC),
+    SensorEntityDescription(key="audio_driver", entity_category=EntityCategory.DIAGNOSTIC),
+    SensorEntityDescription(key="menu_driver", entity_category=EntityCategory.DIAGNOSTIC),
 )
 
 
@@ -126,6 +109,7 @@ class RetroArchSensor(RetroArchEntity, SensorEntity):
     ) -> None:
         super().__init__(coordinator)
         self.entity_description = description
+        self._attr_translation_key = description.key
         self._attr_unique_id = f"{coordinator.config_entry.entry_id}_{description.key}"
 
     @property
@@ -143,6 +127,7 @@ class RetroArchConfigSensor(RetroArchEntity, SensorEntity):
     ) -> None:
         super().__init__(coordinator)
         self.entity_description = description
+        self._attr_translation_key = description.key
         self._attr_unique_id = f"{coordinator.config_entry.entry_id}_cfg_{description.key}"
 
     @property

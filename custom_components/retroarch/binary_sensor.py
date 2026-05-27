@@ -28,17 +28,14 @@ class RetroArchBinaryDescription(BinarySensorEntityDescription):
 BINARY_SENSORS: tuple[RetroArchBinaryDescription, ...] = (
     RetroArchBinaryDescription(
         key="playing",
-        name="Playing",
         value_fn=lambda data: data.state == STATE_PLAYING,
     ),
     RetroArchBinaryDescription(
         key="paused",
-        name="Paused",
         value_fn=lambda data: data.state == STATE_PAUSED,
     ),
     RetroArchBinaryDescription(
         key="content_loaded",
-        name="Content loaded",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda data: data.state in (STATE_PLAYING, STATE_PAUSED),
     ),
@@ -68,6 +65,7 @@ class RetroArchBinarySensor(RetroArchEntity, BinarySensorEntity):
     ) -> None:
         super().__init__(coordinator)
         self.entity_description = description
+        self._attr_translation_key = description.key
         self._attr_unique_id = f"{coordinator.config_entry.entry_id}_{description.key}"
 
     @property

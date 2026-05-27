@@ -89,5 +89,273 @@
         }
       }
     }
+  },
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "Status"
+      },
+      "game": {
+        "name": "Game"
+      },
+      "system": {
+        "name": "System"
+      },
+      "crc32": {
+        "name": "Content CRC32"
+      },
+      "version": {
+        "name": "Version"
+      },
+      "video_driver": {
+        "name": "Video driver"
+      },
+      "audio_driver": {
+        "name": "Audio driver"
+      },
+      "menu_driver": {
+        "name": "Menu driver"
+      }
+    },
+    "binary_sensor": {
+      "playing": {
+        "name": "Playing"
+      },
+      "paused": {
+        "name": "Paused"
+      },
+      "content_loaded": {
+        "name": "Content loaded"
+      }
+    },
+    "button": {
+      "pause_toggle": {
+        "name": "Pause/Resume"
+      },
+      "reset": {
+        "name": "Reset"
+      },
+      "frame_advance": {
+        "name": "Frame advance"
+      },
+      "save_state": {
+        "name": "Save state"
+      },
+      "load_state": {
+        "name": "Load state"
+      },
+      "state_slot_plus": {
+        "name": "State slot +"
+      },
+      "state_slot_minus": {
+        "name": "State slot -"
+      },
+      "screenshot": {
+        "name": "Screenshot"
+      },
+      "fast_forward": {
+        "name": "Fast forward toggle"
+      },
+      "rewind": {
+        "name": "Rewind"
+      },
+      "slow_motion": {
+        "name": "Slow motion"
+      },
+      "ai_service": {
+        "name": "AI service"
+      },
+      "menu_toggle": {
+        "name": "Menu toggle"
+      },
+      "close_content": {
+        "name": "Close content"
+      },
+      "quit": {
+        "name": "Quit RetroArch"
+      },
+      "disk_eject_toggle": {
+        "name": "Disk eject toggle"
+      },
+      "disk_next": {
+        "name": "Disk next"
+      },
+      "disk_prev": {
+        "name": "Disk previous"
+      },
+      "shader_next": {
+        "name": "Shader next"
+      },
+      "shader_prev": {
+        "name": "Shader previous"
+      },
+      "shader_toggle": {
+        "name": "Shader toggle"
+      },
+      "cheat_toggle": {
+        "name": "Cheat toggle"
+      },
+      "cheat_index_plus": {
+        "name": "Cheat index +"
+      },
+      "cheat_index_minus": {
+        "name": "Cheat index -"
+      },
+      "volume_up": {
+        "name": "Volume up"
+      },
+      "volume_down": {
+        "name": "Volume down"
+      },
+      "recording_toggle": {
+        "name": "Recording toggle"
+      },
+      "streaming_toggle": {
+        "name": "Streaming toggle"
+      },
+      "fps_toggle": {
+        "name": "FPS display toggle"
+      },
+      "statistics_toggle": {
+        "name": "Statistics toggle"
+      },
+      "game_focus_toggle": {
+        "name": "Game focus toggle"
+      },
+      "grab_mouse_toggle": {
+        "name": "Grab mouse toggle"
+      },
+      "runahead_toggle": {
+        "name": "Run-ahead toggle"
+      },
+      "vrr_runloop_toggle": {
+        "name": "VRR runloop toggle"
+      }
+    },
+    "switch": {
+      "fast_forward": {
+        "name": "Fast forward"
+      },
+      "slow_motion": {
+        "name": "Slow motion"
+      },
+      "mute": {
+        "name": "Mute"
+      },
+      "fullscreen": {
+        "name": "Fullscreen"
+      },
+      "pause": {
+        "name": "Pause"
+      }
+    }
+  },
+  "services": {
+    "send_command": {
+      "name": "Send command",
+      "description": "Send a raw RetroArch Network Control command.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integration",
+          "description": "RetroArch instance to target."
+        },
+        "command": {
+          "name": "Command",
+          "description": "The network command to send, e.g. RESET."
+        }
+      }
+    },
+    "read_memory": {
+      "name": "Read memory",
+      "description": "Read bytes from core RAM at a hex address; returns the data.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integration",
+          "description": "RetroArch instance to target."
+        },
+        "address": {
+          "name": "Address (hex)",
+          "description": "Memory address in hexadecimal, e.g. 7e0019."
+        },
+        "size": {
+          "name": "Bytes",
+          "description": "Number of bytes to read."
+        }
+      }
+    },
+    "write_memory": {
+      "name": "Write memory",
+      "description": "Write bytes to core RAM at a hex address.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integration",
+          "description": "RetroArch instance to target."
+        },
+        "address": {
+          "name": "Address (hex)",
+          "description": "Memory address in hexadecimal, e.g. 7e0019."
+        },
+        "data": {
+          "name": "Data",
+          "description": "List of byte values (0-255) to write."
+        }
+      }
+    },
+    "show_message": {
+      "name": "Show message",
+      "description": "Show an on-screen message in RetroArch.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integration",
+          "description": "RetroArch instance to target."
+        },
+        "message": {
+          "name": "Message",
+          "description": "Text to display."
+        }
+      }
+    },
+    "load_state_slot": {
+      "name": "Load state slot",
+      "description": "Load a specific save-state slot.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integration",
+          "description": "RetroArch instance to target."
+        },
+        "slot": {
+          "name": "Slot",
+          "description": "Save-state slot number."
+        }
+      }
+    },
+    "set_shader": {
+      "name": "Set shader",
+      "description": "Load a shader by file path.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integration",
+          "description": "RetroArch instance to target."
+        },
+        "path": {
+          "name": "Path",
+          "description": "Shader file path."
+        }
+      }
+    },
+    "load_core": {
+      "name": "Load core",
+      "description": "Load a libretro core by file path.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integration",
+          "description": "RetroArch instance to target."
+        },
+        "path": {
+          "name": "Path",
+          "description": "Core file path."
+        }
+      }
+    }
   }
 }

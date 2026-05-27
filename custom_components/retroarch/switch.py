@@ -21,11 +21,11 @@ class RetroArchSwitchDescription(SwitchEntityDescription):
 
 
 SWITCHES: tuple[RetroArchSwitchDescription, ...] = (
-    RetroArchSwitchDescription(key="fast_forward", name="Fast forward", command="FAST_FORWARD"),
-    RetroArchSwitchDescription(key="slow_motion", name="Slow motion", command="SLOWMOTION"),
-    RetroArchSwitchDescription(key="mute", name="Mute", command="MUTE"),
-    RetroArchSwitchDescription(key="fullscreen", name="Fullscreen", command="FULLSCREEN_TOGGLE", entity_category=EntityCategory.CONFIG),
-    RetroArchSwitchDescription(key="pause", name="Pause", command="PAUSE_TOGGLE"),
+    RetroArchSwitchDescription(key="fast_forward", command="FAST_FORWARD"),
+    RetroArchSwitchDescription(key="slow_motion", command="SLOWMOTION"),
+    RetroArchSwitchDescription(key="mute", command="MUTE"),
+    RetroArchSwitchDescription(key="fullscreen", command="FULLSCREEN_TOGGLE", entity_category=EntityCategory.CONFIG),
+    RetroArchSwitchDescription(key="pause", command="PAUSE_TOGGLE"),
 )
 
 
@@ -51,6 +51,7 @@ class RetroArchSwitch(RetroArchEntity, SwitchEntity):
     ) -> None:
         super().__init__(coordinator)
         self.entity_description = description
+        self._attr_translation_key = description.key
         self._attr_unique_id = f"{coordinator.config_entry.entry_id}_{description.key}"
         self._attr_is_on = False
 

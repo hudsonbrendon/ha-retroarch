@@ -89,5 +89,273 @@
         }
       }
     }
+  },
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "Status"
+      },
+      "game": {
+        "name": "Jogo"
+      },
+      "system": {
+        "name": "Sistema"
+      },
+      "crc32": {
+        "name": "CRC32 do conteúdo"
+      },
+      "version": {
+        "name": "Versão"
+      },
+      "video_driver": {
+        "name": "Driver de vídeo"
+      },
+      "audio_driver": {
+        "name": "Driver de áudio"
+      },
+      "menu_driver": {
+        "name": "Driver de menu"
+      }
+    },
+    "binary_sensor": {
+      "playing": {
+        "name": "Jogando"
+      },
+      "paused": {
+        "name": "Pausado"
+      },
+      "content_loaded": {
+        "name": "Conteúdo carregado"
+      }
+    },
+    "button": {
+      "pause_toggle": {
+        "name": "Pausar/Retomar"
+      },
+      "reset": {
+        "name": "Resetar"
+      },
+      "frame_advance": {
+        "name": "Avançar quadro"
+      },
+      "save_state": {
+        "name": "Salvar estado"
+      },
+      "load_state": {
+        "name": "Carregar estado"
+      },
+      "state_slot_plus": {
+        "name": "Slot de estado +"
+      },
+      "state_slot_minus": {
+        "name": "Slot de estado -"
+      },
+      "screenshot": {
+        "name": "Captura de tela"
+      },
+      "fast_forward": {
+        "name": "Alternar avanço rápido"
+      },
+      "rewind": {
+        "name": "Retroceder"
+      },
+      "slow_motion": {
+        "name": "Câmera lenta"
+      },
+      "ai_service": {
+        "name": "Serviço de IA"
+      },
+      "menu_toggle": {
+        "name": "Alternar menu"
+      },
+      "close_content": {
+        "name": "Fechar conteúdo"
+      },
+      "quit": {
+        "name": "Sair do RetroArch"
+      },
+      "disk_eject_toggle": {
+        "name": "Ejetar/inserir disco"
+      },
+      "disk_next": {
+        "name": "Próximo disco"
+      },
+      "disk_prev": {
+        "name": "Disco anterior"
+      },
+      "shader_next": {
+        "name": "Próximo shader"
+      },
+      "shader_prev": {
+        "name": "Shader anterior"
+      },
+      "shader_toggle": {
+        "name": "Alternar shader"
+      },
+      "cheat_toggle": {
+        "name": "Alternar trapaça"
+      },
+      "cheat_index_plus": {
+        "name": "Índice de trapaça +"
+      },
+      "cheat_index_minus": {
+        "name": "Índice de trapaça -"
+      },
+      "volume_up": {
+        "name": "Aumentar volume"
+      },
+      "volume_down": {
+        "name": "Diminuir volume"
+      },
+      "recording_toggle": {
+        "name": "Alternar gravação"
+      },
+      "streaming_toggle": {
+        "name": "Alternar transmissão"
+      },
+      "fps_toggle": {
+        "name": "Alternar exibição de FPS"
+      },
+      "statistics_toggle": {
+        "name": "Alternar estatísticas"
+      },
+      "game_focus_toggle": {
+        "name": "Alternar foco no jogo"
+      },
+      "grab_mouse_toggle": {
+        "name": "Alternar captura do mouse"
+      },
+      "runahead_toggle": {
+        "name": "Alternar run-ahead"
+      },
+      "vrr_runloop_toggle": {
+        "name": "Alternar VRR runloop"
+      }
+    },
+    "switch": {
+      "fast_forward": {
+        "name": "Avanço rápido"
+      },
+      "slow_motion": {
+        "name": "Câmera lenta"
+      },
+      "mute": {
+        "name": "Mudo"
+      },
+      "fullscreen": {
+        "name": "Tela cheia"
+      },
+      "pause": {
+        "name": "Pausar"
+      }
+    }
+  },
+  "services": {
+    "send_command": {
+      "name": "Enviar comando",
+      "description": "Envia um comando bruto da interface de rede do RetroArch.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integração",
+          "description": "Instância do RetroArch alvo."
+        },
+        "command": {
+          "name": "Comando",
+          "description": "O comando de rede a enviar, ex.: RESET."
+        }
+      }
+    },
+    "read_memory": {
+      "name": "Ler memória",
+      "description": "Lê bytes da RAM do core em um endereço hexadecimal; retorna os dados.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integração",
+          "description": "Instância do RetroArch alvo."
+        },
+        "address": {
+          "name": "Endereço (hex)",
+          "description": "Endereço de memória em hexadecimal, ex.: 7e0019."
+        },
+        "size": {
+          "name": "Bytes",
+          "description": "Número de bytes a ler."
+        }
+      }
+    },
+    "write_memory": {
+      "name": "Escrever memória",
+      "description": "Escreve bytes na RAM do core em um endereço hexadecimal.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integração",
+          "description": "Instância do RetroArch alvo."
+        },
+        "address": {
+          "name": "Endereço (hex)",
+          "description": "Endereço de memória em hexadecimal, ex.: 7e0019."
+        },
+        "data": {
+          "name": "Dados",
+          "description": "Lista de valores de byte (0-255) a escrever."
+        }
+      }
+    },
+    "show_message": {
+      "name": "Mostrar mensagem",
+      "description": "Mostra uma mensagem na tela do RetroArch.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integração",
+          "description": "Instância do RetroArch alvo."
+        },
+        "message": {
+          "name": "Mensagem",
+          "description": "Texto a exibir."
+        }
+      }
+    },
+    "load_state_slot": {
+      "name": "Carregar slot de estado",
+      "description": "Carrega um slot de save-state específico.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integração",
+          "description": "Instância do RetroArch alvo."
+        },
+        "slot": {
+          "name": "Slot",
+          "description": "Número do slot de save-state."
+        }
+      }
+    },
+    "set_shader": {
+      "name": "Definir shader",
+      "description": "Carrega um shader pelo caminho do arquivo.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integração",
+          "description": "Instância do RetroArch alvo."
+        },
+        "path": {
+          "name": "Caminho",
+          "description": "Caminho do arquivo de shader."
+        }
+      }
+    },
+    "load_core": {
+      "name": "Carregar core",
+      "description": "Carrega um core do libretro pelo caminho do arquivo.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integração",
+          "description": "Instância do RetroArch alvo."
+        },
+        "path": {
+          "name": "Caminho",
+          "description": "Caminho do arquivo do core."
+        }
+      }
+    }
   }
 }
