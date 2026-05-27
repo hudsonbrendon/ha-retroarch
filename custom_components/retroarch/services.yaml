@@ -1,0 +1,102 @@
+send_command:
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: retroarch
+    command:
+      required: true
+      example: "RESET"
+      selector:
+        text:
+
+read_memory:
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: retroarch
+    address:
+      required: true
+      example: "7e0019"
+      selector:
+        text:
+    size:
+      required: true
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 256
+          mode: box
+
+write_memory:
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: retroarch
+    address:
+      required: true
+      example: "7e0019"
+      selector:
+        text:
+    data:
+      required: true
+      example: "[10, 255]"
+      selector:
+        object:
+
+show_message:
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: retroarch
+    message:
+      required: true
+      selector:
+        text:
+
+load_state_slot:
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: retroarch
+    slot:
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 999
+          mode: box
+
+set_shader:
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: retroarch
+    path:
+      required: true
+      selector:
+        text:
+
+load_core:
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: retroarch
+    path:
+      required: true
+      selector:
+        text:
