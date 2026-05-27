@@ -104,7 +104,7 @@ from homeassistant.const import CONF_SCAN_INTERVAL
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.retroarch.api import RetroArchStatus
-from custom_components.retroarch.const import CONF_RAM_SENSORS
+from custom_components.retroarch.const import CONF_BOX_ART_ENABLED, CONF_RAM_SENSORS
 
 
 async def _load_entry(hass):
@@ -249,3 +249,27 @@ async def test_options_settings_changes_interval(hass):
         await hass.async_block_till_done()
 
     assert entry.options[CONF_SCAN_INTERVAL] == 10
+
+
+async def test_options_box_art(hass):
+    entry = await _load_entry(hass)
+    with patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_status",
+        new=_AsyncMock(return_value=RetroArchStatus(available=True, state="contentless")),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_version",
+        new=_AsyncMock(return_value="1.19.1"),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_config_param",
+        new=_AsyncMock(return_value=None),
+    ):
+        result = await hass.config_entries.options.async_init(entry.entry_id)
+        result = await hass.config_entries.options.async_configure(
+            result["flow_id"], {"next_step_id": "box_art"}
+        )
+        result = await hass.config_entries.options.async_configure(
+            result["flow_id"], {"box_art_enabled": False, "box_art_system": ""}
+        )
+        await hass.async_block_till_done()
+
+    assert entry.options[CONF_BOX_ART_ENABLED] is False

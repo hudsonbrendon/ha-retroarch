@@ -43,6 +43,7 @@
         "title": "Opções do RetroArch",
         "menu_options": {
           "settings": "Configurações de polling",
+          "box_art": "Capa do jogo",
           "add_ram_sensor": "Adicionar sensor de RAM",
           "remove_ram_sensor": "Remover sensor de RAM"
         }
@@ -50,6 +51,13 @@
       "settings": {
         "data": {
           "scan_interval": "Intervalo de polling (segundos)"
+        }
+      },
+      "box_art": {
+        "title": "Capa do jogo",
+        "data": {
+          "box_art_enabled": "Mostrar a capa no media player",
+          "box_art_system": "Sobrescrever a pasta de sistema do libretro (opcional, ex.: Nintendo - Super Nintendo Entertainment System)"
         }
       },
       "add_ram_sensor": {

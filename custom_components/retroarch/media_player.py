@@ -10,7 +10,8 @@ from homeassistant.components.media_player import (
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import STATE_PAUSED, STATE_PLAYING
+from .const import CONF_BOX_ART_ENABLED, CONF_BOX_ART_SYSTEM, STATE_PAUSED, STATE_PLAYING
+from .thumbnails import boxart_url
 from .coordinator import RetroArchConfigEntry, RetroArchDataUpdateCoordinator
 from .entity import RetroArchEntity
 
@@ -56,6 +57,14 @@ class RetroArchMediaPlayer(RetroArchEntity, MediaPlayerEntity):
     @property
     def app_name(self) -> str | None:
         return self.coordinator.data.system
+
+    @property
+    def media_image_url(self) -> str | None:
+        options = self.coordinator.config_entry.options
+        if not options.get(CONF_BOX_ART_ENABLED, True):
+            return None
+        data = self.coordinator.data
+        return boxart_url(data.system, data.game, options.get(CONF_BOX_ART_SYSTEM) or None)
 
     async def async_media_play(self) -> None:
         if self.coordinator.data.state == STATE_PAUSED:

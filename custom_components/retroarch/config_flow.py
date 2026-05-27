@@ -16,6 +16,8 @@ from homeassistant.core import callback
 
 from .api import RetroArchClient, async_discover
 from .const import (
+    CONF_BOX_ART_ENABLED,
+    CONF_BOX_ART_SYSTEM,
     CONF_RAM_ADDRESS,
     CONF_RAM_BIG_ENDIAN,
     CONF_RAM_NAME,
@@ -139,7 +141,7 @@ class RetroArchOptionsFlow(OptionsFlow):
     ) -> ConfigFlowResult:
         return self.async_show_menu(
             step_id="init",
-            menu_options=["settings", "add_ram_sensor", "remove_ram_sensor"],
+            menu_options=["settings", "box_art", "add_ram_sensor", "remove_ram_sensor"],
         )
 
     async def async_step_settings(
@@ -155,6 +157,32 @@ class RetroArchOptionsFlow(OptionsFlow):
             {vol.Required(CONF_SCAN_INTERVAL, default=current): vol.All(int, vol.Range(min=1))}
         )
         return self.async_show_form(step_id="settings", data_schema=schema)
+
+    async def async_step_box_art(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
+        if user_input is not None:
+            return self._save(
+                {
+                    CONF_BOX_ART_ENABLED: user_input[CONF_BOX_ART_ENABLED],
+                    CONF_BOX_ART_SYSTEM: user_input.get(CONF_BOX_ART_SYSTEM, ""),
+                }
+            )
+
+        options = self.config_entry.options
+        schema = vol.Schema(
+            {
+                vol.Required(
+                    CONF_BOX_ART_ENABLED,
+                    default=options.get(CONF_BOX_ART_ENABLED, True),
+                ): bool,
+                vol.Optional(
+                    CONF_BOX_ART_SYSTEM,
+                    default=options.get(CONF_BOX_ART_SYSTEM, ""),
+                ): str,
+            }
+        )
+        return self.async_show_form(step_id="box_art", data_schema=schema)
 
     async def async_step_add_ram_sensor(
         self, user_input: dict[str, Any] | None = None

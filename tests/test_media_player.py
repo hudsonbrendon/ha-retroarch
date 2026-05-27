@@ -7,7 +7,7 @@ from homeassistant.const import Platform
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.retroarch.api import RetroArchStatus
-from custom_components.retroarch.const import DOMAIN
+from custom_components.retroarch.const import CONF_BOX_ART_ENABLED, CONF_BOX_ART_SYSTEM, DOMAIN
 
 from .const import MOCK_CONFIG
 
@@ -71,3 +71,37 @@ async def test_media_player_stop_closes_content(hass):
             "media_player", "media_stop", {"entity_id": "media_player.retroarch"}, blocking=True
         )
     mock_send.assert_awaited_once_with("CLOSE_CONTENT")
+
+
+async def _setup_with_options(hass, status, options):
+    entry = MockConfigEntry(
+        domain=DOMAIN, data=MOCK_CONFIG, options=options, unique_id="192.168.1.50:55355"
+    )
+    entry.add_to_hass(hass)
+    with patch("custom_components.retroarch.PLATFORMS", [Platform.MEDIA_PLAYER]), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_status",
+        new=AsyncMock(return_value=status),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_version",
+        new=AsyncMock(return_value="1.19.1"),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_config_param",
+        new=AsyncMock(return_value=None),
+    ):
+        assert await hass.config_entries.async_setup(entry.entry_id)
+        await hass.async_block_till_done()
+    return entry
+
+
+async def test_media_image_url_known_system(hass):
+    status = RetroArchStatus(available=True, state="playing", system="super_nintendo", game="Super Mario World (USA)")
+    await _setup_with_options(hass, status, {CONF_BOX_ART_ENABLED: True})
+    state = hass.states.get("media_player.retroarch")
+    assert state.attributes.get("entity_picture")
+
+
+async def test_media_image_disabled(hass):
+    status = RetroArchStatus(available=True, state="playing", system="super_nintendo", game="Super Mario World (USA)")
+    await _setup_with_options(hass, status, {CONF_BOX_ART_ENABLED: False})
+    state = hass.states.get("media_player.retroarch")
+    assert "entity_picture" not in state.attributes

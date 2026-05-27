@@ -43,6 +43,7 @@
         "title": "RetroArch options",
         "menu_options": {
           "settings": "Polling settings",
+          "box_art": "Box art",
           "add_ram_sensor": "Add a RAM sensor",
           "remove_ram_sensor": "Remove a RAM sensor"
         }
@@ -50,6 +51,13 @@
       "settings": {
         "data": {
           "scan_interval": "Polling interval (seconds)"
+        }
+      },
+      "box_art": {
+        "title": "Box art",
+        "data": {
+          "box_art_enabled": "Show box art on the media player",
+          "box_art_system": "Override libretro system folder (optional, e.g. Nintendo - Super Nintendo Entertainment System)"
         }
       },
       "add_ram_sensor": {

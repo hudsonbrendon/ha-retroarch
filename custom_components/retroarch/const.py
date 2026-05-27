@@ -42,3 +42,7 @@ CONF_RAM_SIGNED: Final = "signed"
 CONF_RAM_BIG_ENDIAN: Final = "big_endian"
 CONF_RAM_SCALE: Final = "scale"
 CONF_RAM_UNIT: Final = "unit"
+
+# --- Options flow keys (box art) ---
+CONF_BOX_ART_ENABLED: Final = "box_art_enabled"
+CONF_BOX_ART_SYSTEM: Final = "box_art_system"
