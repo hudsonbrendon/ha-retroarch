@@ -96,3 +96,81 @@ async def test_discovery_empty_falls_back_to_manual(hass):
 
     assert result["type"] == FlowResultType.FORM
     assert result["step_id"] == "manual"
+
+
+from unittest.mock import AsyncMock as _AsyncMock  # alias to avoid shadowing above
+
+from homeassistant.const import CONF_SCAN_INTERVAL
+from pytest_homeassistant_custom_component.common import MockConfigEntry
+
+from custom_components.retroarch.api import RetroArchStatus
+from custom_components.retroarch.const import CONF_RAM_SENSORS
+
+
+async def _load_entry(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, unique_id="192.168.1.50:55355")
+    entry.add_to_hass(hass)
+    with patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_status",
+        new=_AsyncMock(return_value=RetroArchStatus(available=True, state="contentless")),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_version",
+        new=_AsyncMock(return_value="1.19.1"),
+    ):
+        assert await hass.config_entries.async_setup(entry.entry_id)
+        await hass.async_block_till_done()
+    return entry
+
+
+async def test_options_add_ram_sensor(hass):
+    entry = await _load_entry(hass)
+    with patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_status",
+        new=_AsyncMock(return_value=RetroArchStatus(available=True, state="contentless")),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_version",
+        new=_AsyncMock(return_value="1.19.1"),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_read_memory",
+        new=_AsyncMock(return_value=[1]),
+    ):
+        result = await hass.config_entries.options.async_init(entry.entry_id)
+        result = await hass.config_entries.options.async_configure(
+            result["flow_id"], {"next_step_id": "add_ram_sensor"}
+        )
+        result = await hass.config_entries.options.async_configure(
+            result["flow_id"],
+            {
+                "name": "Lives",
+                "address": "7e0019",
+                "size": 1,
+                "signed": False,
+                "big_endian": False,
+                "scale": 1.0,
+                "unit": "lives",
+            },
+        )
+        await hass.async_block_till_done()
+
+    assert entry.options[CONF_RAM_SENSORS][0]["name"] == "Lives"
+
+
+async def test_options_settings_changes_interval(hass):
+    entry = await _load_entry(hass)
+    with patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_status",
+        new=_AsyncMock(return_value=RetroArchStatus(available=True, state="contentless")),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_version",
+        new=_AsyncMock(return_value="1.19.1"),
+    ):
+        result = await hass.config_entries.options.async_init(entry.entry_id)
+        result = await hass.config_entries.options.async_configure(
+            result["flow_id"], {"next_step_id": "settings"}
+        )
+        result = await hass.config_entries.options.async_configure(
+            result["flow_id"], {CONF_SCAN_INTERVAL: 10}
+        )
+        await hass.async_block_till_done()
+
+    assert entry.options[CONF_SCAN_INTERVAL] == 10
