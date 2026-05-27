@@ -116,6 +116,9 @@ async def _load_entry(hass):
     ), patch(
         "custom_components.retroarch.coordinator.RetroArchClient.async_get_version",
         new=_AsyncMock(return_value="1.19.1"),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_config_param",
+        new=_AsyncMock(return_value=None),
     ):
         assert await hass.config_entries.async_setup(entry.entry_id)
         await hass.async_block_till_done()
@@ -133,6 +136,9 @@ async def test_options_add_ram_sensor(hass):
     ), patch(
         "custom_components.retroarch.coordinator.RetroArchClient.async_read_memory",
         new=_AsyncMock(return_value=[1]),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_config_param",
+        new=_AsyncMock(return_value=None),
     ):
         result = await hass.config_entries.options.async_init(entry.entry_id)
         result = await hass.config_entries.options.async_configure(
@@ -166,6 +172,9 @@ async def test_options_remove_ram_sensor(hass):
     ), patch(
         "custom_components.retroarch.coordinator.RetroArchClient.async_read_memory",
         new=_AsyncMock(return_value=[1]),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_config_param",
+        new=_AsyncMock(return_value=None),
     ):
         result = await hass.config_entries.options.async_init(entry.entry_id)
         result = await hass.config_entries.options.async_configure(
@@ -205,6 +214,9 @@ async def test_options_remove_ram_sensor_none_aborts(hass):
     ), patch(
         "custom_components.retroarch.coordinator.RetroArchClient.async_get_version",
         new=_AsyncMock(return_value="1.19.1"),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_config_param",
+        new=_AsyncMock(return_value=None),
     ):
         result = await hass.config_entries.options.async_init(entry.entry_id)
         result = await hass.config_entries.options.async_configure(
@@ -223,6 +235,9 @@ async def test_options_settings_changes_interval(hass):
     ), patch(
         "custom_components.retroarch.coordinator.RetroArchClient.async_get_version",
         new=_AsyncMock(return_value="1.19.1"),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_config_param",
+        new=_AsyncMock(return_value=None),
     ):
         result = await hass.config_entries.options.async_init(entry.entry_id)
         result = await hass.config_entries.options.async_configure(

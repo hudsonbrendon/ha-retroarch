@@ -22,6 +22,9 @@ async def test_setup_and_unload(hass):
     ), patch(
         "custom_components.retroarch.coordinator.RetroArchClient.async_get_version",
         new=AsyncMock(return_value="1.19.1"),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_config_param",
+        new=AsyncMock(return_value=None),
     ):
         assert await hass.config_entries.async_setup(entry.entry_id)
         await hass.async_block_till_done()
