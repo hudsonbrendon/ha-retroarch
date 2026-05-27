@@ -63,9 +63,13 @@ STATUS_SENSORS: tuple[RetroArchSensorDescription, ...] = (
 
 
 CONFIG_SENSORS: tuple[SensorEntityDescription, ...] = (
-    SensorEntityDescription(key="video_driver", entity_category=EntityCategory.DIAGNOSTIC),
-    SensorEntityDescription(key="audio_driver", entity_category=EntityCategory.DIAGNOSTIC),
-    SensorEntityDescription(key="menu_driver", entity_category=EntityCategory.DIAGNOSTIC),
+    SensorEntityDescription(key="netplay_nickname", entity_category=EntityCategory.DIAGNOSTIC, entity_registry_enabled_default=False),
+    SensorEntityDescription(key="savefile_directory", entity_category=EntityCategory.DIAGNOSTIC, entity_registry_enabled_default=False),
+    SensorEntityDescription(key="savestate_directory", entity_category=EntityCategory.DIAGNOSTIC, entity_registry_enabled_default=False),
+    SensorEntityDescription(key="system_directory", entity_category=EntityCategory.DIAGNOSTIC, entity_registry_enabled_default=False),
+    SensorEntityDescription(key="cache_directory", entity_category=EntityCategory.DIAGNOSTIC, entity_registry_enabled_default=False),
+    SensorEntityDescription(key="log_dir", entity_category=EntityCategory.DIAGNOSTIC, entity_registry_enabled_default=False),
+    SensorEntityDescription(key="runtime_log_directory", entity_category=EntityCategory.DIAGNOSTIC, entity_registry_enabled_default=False),
 )
 
 

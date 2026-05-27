@@ -107,14 +107,26 @@
       "version": {
         "name": "Versión"
       },
-      "video_driver": {
-        "name": "Controlador de vídeo"
+      "netplay_nickname": {
+        "name": "Apodo de netplay"
       },
-      "audio_driver": {
-        "name": "Controlador de audio"
+      "savefile_directory": {
+        "name": "Carpeta de partidas guardadas"
       },
-      "menu_driver": {
-        "name": "Controlador de menú"
+      "savestate_directory": {
+        "name": "Carpeta de estados guardados"
+      },
+      "system_directory": {
+        "name": "Carpeta de sistema"
+      },
+      "cache_directory": {
+        "name": "Carpeta de caché"
+      },
+      "log_dir": {
+        "name": "Carpeta de registros"
+      },
+      "runtime_log_directory": {
+        "name": "Carpeta de registros de ejecución"
       }
     },
     "binary_sensor": {
@@ -126,6 +138,15 @@
       },
       "content_loaded": {
         "name": "Contenido cargado"
+      },
+      "menu_open": {
+        "name": "Menú abierto"
+      },
+      "replay_active": {
+        "name": "Repetición activa"
+      },
+      "retroachievements": {
+        "name": "RetroAchievements"
       }
     },
     "button": {

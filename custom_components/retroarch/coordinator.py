@@ -15,7 +15,19 @@ _LOGGER = logging.getLogger(__name__)
 
 type RetroArchConfigEntry = ConfigEntry["RetroArchDataUpdateCoordinator"]
 
-CONFIG_PARAMS: tuple[str, ...] = ("video_driver", "audio_driver", "menu_driver")
+# Live state — polled every cycle.
+DYNAMIC_CONFIG_PARAMS: tuple[str, ...] = ("video_fullscreen", "menu_active", "active_replay")
+# Rarely change — fetched once and cached.
+STATIC_CONFIG_PARAMS: tuple[str, ...] = (
+    "cheevos_enable",
+    "netplay_nickname",
+    "savefile_directory",
+    "savestate_directory",
+    "system_directory",
+    "cache_directory",
+    "log_dir",
+    "runtime_log_directory",
+)
 
 
 class RetroArchDataUpdateCoordinator(DataUpdateCoordinator[RetroArchStatus]):
@@ -40,7 +52,7 @@ class RetroArchDataUpdateCoordinator(DataUpdateCoordinator[RetroArchStatus]):
         self.device_name = name
         self.ram_sensors = ram_sensors
         self._version: str | None = None
-        self._config: dict[str, str] | None = None
+        self._static_config: dict[str, str] | None = None
 
     async def _async_update_data(self) -> RetroArchStatus:
         status = await self.client.async_get_status()
@@ -53,13 +65,18 @@ class RetroArchDataUpdateCoordinator(DataUpdateCoordinator[RetroArchStatus]):
             self._version = await self.client.async_get_version()
         status.version = self._version
 
-        if self._config is None:
-            self._config = {}
-            for param in CONFIG_PARAMS:
+        for param in DYNAMIC_CONFIG_PARAMS:
+            value = await self.client.async_get_config_param(param)
+            if value is not None:
+                status.config[param] = value
+
+        if self._static_config is None:
+            self._static_config = {}
+            for param in STATIC_CONFIG_PARAMS:
                 value = await self.client.async_get_config_param(param)
                 if value is not None:
-                    self._config[param] = value
-        status.config = self._config
+                    self._static_config[param] = value
+        status.config.update(self._static_config)
 
         for sensor in self.ram_sensors:
             address = int(str(sensor["address"]), 16)

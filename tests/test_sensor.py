@@ -6,6 +6,8 @@ from unittest.mock import AsyncMock, patch
 from homeassistant.const import Platform
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
+from homeassistant.helpers import entity_registry as er
+
 from custom_components.retroarch.api import RetroArchStatus
 from custom_components.retroarch.const import CONF_RAM_SENSORS, DOMAIN
 from custom_components.retroarch.sensor import _decode
@@ -72,11 +74,12 @@ def test_decode_scaled_returns_float():
     assert _decode([0x0A], signed=False, big_endian=False, scale=0.5) == 5.0
 
 
-async def test_config_param_sensor(hass):
+async def test_diagnostic_config_sensor_registered_disabled(hass):
     status = RetroArchStatus(
         available=True, state="playing", system="nes", game="Metroid",
-        config={"video_driver": "gl", "audio_driver": "alsa", "menu_driver": "ozone"},
+        config={"netplay_nickname": "RetroFan"},
     )
     await _setup(hass, status)
-    state = hass.states.get("sensor.retroarch_video_driver")
-    assert state.state == "gl"
+    entry = er.async_get(hass).async_get("sensor.retroarch_netplay_nickname")
+    assert entry is not None
+    assert entry.disabled  # diagnostic, disabled by default

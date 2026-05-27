@@ -107,14 +107,26 @@
       "version": {
         "name": "Version"
       },
-      "video_driver": {
-        "name": "Video driver"
+      "netplay_nickname": {
+        "name": "Netplay nickname"
       },
-      "audio_driver": {
-        "name": "Audio driver"
+      "savefile_directory": {
+        "name": "Save file directory"
       },
-      "menu_driver": {
-        "name": "Menu driver"
+      "savestate_directory": {
+        "name": "Save state directory"
+      },
+      "system_directory": {
+        "name": "System directory"
+      },
+      "cache_directory": {
+        "name": "Cache directory"
+      },
+      "log_dir": {
+        "name": "Log directory"
+      },
+      "runtime_log_directory": {
+        "name": "Runtime log directory"
       }
     },
     "binary_sensor": {
@@ -126,6 +138,15 @@
       },
       "content_loaded": {
         "name": "Content loaded"
+      },
+      "menu_open": {
+        "name": "Menu open"
+      },
+      "replay_active": {
+        "name": "Replay active"
+      },
+      "retroachievements": {
+        "name": "RetroAchievements"
       }
     },
     "button": {

@@ -39,6 +39,19 @@ BINARY_SENSORS: tuple[RetroArchBinaryDescription, ...] = (
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda data: data.state in (STATE_PLAYING, STATE_PAUSED),
     ),
+    RetroArchBinaryDescription(
+        key="menu_open",
+        value_fn=lambda data: data.config.get("menu_active") == "true",
+    ),
+    RetroArchBinaryDescription(
+        key="replay_active",
+        value_fn=lambda data: data.config.get("active_replay") == "true",
+    ),
+    RetroArchBinaryDescription(
+        key="retroachievements",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda data: data.config.get("cheevos_enable") == "true",
+    ),
 )
 
 

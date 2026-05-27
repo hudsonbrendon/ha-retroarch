@@ -23,7 +23,7 @@ async def _setup(hass, status):
         new=AsyncMock(return_value="1.19.1"),
     ), patch(
         "custom_components.retroarch.coordinator.RetroArchClient.async_get_config_param",
-        new=AsyncMock(return_value=None),
+        new=AsyncMock(side_effect=lambda name: status.config.get(name)),
     ):
         assert await hass.config_entries.async_setup(entry.entry_id)
         await hass.async_block_till_done()
@@ -40,3 +40,15 @@ async def test_paused_binary_sensor_on(hass):
     await _setup(hass, RetroArchStatus(available=True, state="paused", game="Metroid"))
     assert hass.states.get("binary_sensor.retroarch_playing").state == "off"
     assert hass.states.get("binary_sensor.retroarch_paused").state == "on"
+
+
+async def test_menu_open_binary_sensor(hass):
+    status = RetroArchStatus(available=True, state="playing", game="X", config={"menu_active": "true"})
+    await _setup(hass, status)
+    assert hass.states.get("binary_sensor.retroarch_menu_open").state == "on"
+
+
+async def test_replay_active_off(hass):
+    status = RetroArchStatus(available=True, state="playing", game="X", config={"active_replay": "false"})
+    await _setup(hass, status)
+    assert hass.states.get("binary_sensor.retroarch_replay_active").state == "off"
