@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import socket
 from dataclasses import dataclass, field
 
 from .const import (
@@ -10,6 +11,7 @@ from .const import (
     CMD_READ_CORE_RAM,
     CMD_VERSION,
     CMD_WRITE_CORE_RAM,
+    DEFAULT_PORT,
     DEFAULT_TIMEOUT,
     STATE_CONTENTLESS,
     STATE_PAUSED,
@@ -176,3 +178,32 @@ class RetroArchClient:
             self._transport.close()
             self._transport = None
             self._protocol = None
+
+
+async def async_discover(
+    broadcast_addresses: list[str] | None = None,
+    port: int = DEFAULT_PORT,
+    timeout: float = 2.0,
+) -> dict[str, str]:
+    """Broadcast VERSION across the LAN and return {host: version} of responders."""
+    targets = broadcast_addresses or ["255.255.255.255"]
+    loop = asyncio.get_running_loop()
+    responders: dict[str, str] = {}
+
+    class _DiscoveryProtocol(asyncio.DatagramProtocol):
+        def datagram_received(self, data: bytes, addr: tuple) -> None:
+            version = data.decode("utf-8", errors="replace").replace(CMD_VERSION, "").strip()
+            responders[addr[0]] = version or "unknown"
+
+    transport, _ = await loop.create_datagram_endpoint(
+        _DiscoveryProtocol,
+        family=socket.AF_INET,
+        allow_broadcast=True,
+    )
+    try:
+        for address in targets:
+            transport.sendto(CMD_VERSION.encode("utf-8"), (address, port))
+        await asyncio.sleep(timeout)
+    finally:
+        transport.close()
+    return responders

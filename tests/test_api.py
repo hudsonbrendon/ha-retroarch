@@ -129,3 +129,39 @@ async def test_write_memory_encodes_bytes():
     client, transport = _wire_client(None)
     await client.async_write_memory(0x7E0019, [0x0A, 0xFF])
     assert transport.sent == [b"WRITE_CORE_RAM 7e0019 a ff"]
+
+
+from unittest.mock import AsyncMock, MagicMock, patch
+
+from custom_components.retroarch import api as ra_api
+
+
+async def test_async_discover_collects_responders():
+    state: dict = {}
+
+    class _FakeTransport:
+        def sendto(self, data, addr=None):
+            state["sent"] = (data, addr)
+
+        def close(self):
+            state["closed"] = True
+
+    async def fake_endpoint(protocol_factory, family=None, allow_broadcast=None):
+        protocol = protocol_factory()
+        state["protocol"] = protocol
+        return _FakeTransport(), protocol
+
+    async def fake_sleep(_seconds):
+        # Simulate a RetroArch instance replying during the wait window.
+        state["protocol"].datagram_received(b"VERSION 1.19.1", ("192.168.1.50", 55355))
+
+    fake_loop = MagicMock()
+    fake_loop.create_datagram_endpoint = AsyncMock(side_effect=fake_endpoint)
+
+    with patch.object(ra_api.asyncio, "get_running_loop", return_value=fake_loop), patch.object(
+        ra_api.asyncio, "sleep", new=fake_sleep
+    ):
+        result = await ra_api.async_discover(["192.168.1.255"], timeout=0.01)
+
+    assert result == {"192.168.1.50": "1.19.1"}
+    assert state["closed"] is True
