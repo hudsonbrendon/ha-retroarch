@@ -111,6 +111,24 @@ class RetroArchConfigFlow(ConfigFlow, domain=DOMAIN):
             step_id="manual", data_schema=USER_SCHEMA, errors=errors
         )
 
+    async def async_step_reconfigure(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
+        """Change host/port/name of an existing entry."""
+        entry = self._get_reconfigure_entry()
+        errors: dict[str, str] = {}
+
+        if user_input is not None:
+            if await self._async_reachable(user_input):
+                return self.async_update_reload_and_abort(entry, data=user_input)
+            errors["base"] = "cannot_connect"
+
+        return self.async_show_form(
+            step_id="reconfigure",
+            data_schema=self.add_suggested_values_to_schema(USER_SCHEMA, entry.data),
+            errors=errors,
+        )
+
     async def _async_reachable(self, user_input: dict[str, Any]) -> bool:
         client = RetroArchClient(user_input[CONF_HOST], user_input[CONF_PORT])
         try:

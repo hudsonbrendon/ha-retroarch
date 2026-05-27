@@ -25,13 +25,23 @@
           "port": "Port",
           "name": "Name"
         }
+      },
+      "reconfigure": {
+        "title": "Reconfigure RetroArch",
+        "description": "Update the host and port of this RetroArch instance.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "name": "Name"
+        }
       }
     },
     "error": {
       "cannot_connect": "Could not reach RetroArch. Check the host, port, and that network commands are enabled."
     },
     "abort": {
-      "already_configured": "This RetroArch instance is already configured."
+      "already_configured": "This RetroArch instance is already configured.",
+      "reconfigure_successful": "RetroArch reconfigured successfully."
     }
   },
   "options": {

@@ -25,13 +25,23 @@
           "port": "Porta",
           "name": "Nome"
         }
+      },
+      "reconfigure": {
+        "title": "Reconfigurar RetroArch",
+        "description": "Atualize o host e a porta desta instância do RetroArch.",
+        "data": {
+          "host": "Host",
+          "port": "Porta",
+          "name": "Nome"
+        }
       }
     },
     "error": {
       "cannot_connect": "Não foi possível alcançar o RetroArch. Verifique host, porta e se os comandos de rede estão ativados."
     },
     "abort": {
-      "already_configured": "Esta instância do RetroArch já está configurada."
+      "already_configured": "Esta instância do RetroArch já está configurada.",
+      "reconfigure_successful": "RetroArch reconfigurado com sucesso."
     }
   },
   "options": {

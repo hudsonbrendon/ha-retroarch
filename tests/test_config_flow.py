@@ -273,3 +273,39 @@ async def test_options_box_art(hass):
         await hass.async_block_till_done()
 
     assert entry.options[CONF_BOX_ART_ENABLED] is False
+
+
+from homeassistant.const import CONF_HOST
+
+
+async def test_reconfigure_updates_host(hass):
+    entry = await _load_entry(hass)
+    try:
+        result = await entry.start_reconfigure_flow(hass)
+    except AttributeError:
+        from homeassistant.config_entries import SOURCE_RECONFIGURE
+        result = await hass.config_entries.flow.async_init(
+            DOMAIN, context={"source": SOURCE_RECONFIGURE, "entry_id": entry.entry_id}
+        )
+    assert result["type"] == FlowResultType.FORM
+    assert result["step_id"] == "reconfigure"
+
+    with patch(
+        "custom_components.retroarch.config_flow.RetroArchClient.async_get_version",
+        new=_AsyncMock(return_value="1.19.1"),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_status",
+        new=_AsyncMock(return_value=RetroArchStatus(available=True, state="contentless")),
+    ), patch(
+        "custom_components.retroarch.coordinator.RetroArchClient.async_get_config_param",
+        new=_AsyncMock(return_value=None),
+    ):
+        result = await hass.config_entries.flow.async_configure(
+            result["flow_id"],
+            {"host": "192.168.1.99", "port": 55355, "name": "RetroArch"},
+        )
+        await hass.async_block_till_done()
+
+    assert result["type"] == FlowResultType.ABORT
+    assert result["reason"] == "reconfigure_successful"
+    assert entry.data[CONF_HOST] == "192.168.1.99"
