@@ -14,6 +14,7 @@ DEFAULT_TIMEOUT: Final = 1.0
 MANUFACTURER: Final = "libretro"
 
 # --- Status / info commands ---
+CMD_GET_CONFIG_PARAM: Final = "GET_CONFIG_PARAM"
 CMD_VERSION: Final = "VERSION"
 CMD_GET_STATUS: Final = "GET_STATUS"
 # --- Memory commands ---

@@ -165,3 +165,13 @@ async def test_async_discover_collects_responders():
 
     assert result == {"192.168.1.50": "1.19.1"}
     assert state["closed"] is True
+
+
+async def test_get_config_param_parses_value():
+    client, _ = _wire_client(b"GET_CONFIG_PARAM video_driver gl")
+    assert await client.async_get_config_param("video_driver") == "gl"
+
+
+async def test_get_config_param_none_on_timeout():
+    client, _ = _wire_client(None)
+    assert await client.async_get_config_param("video_driver") is None

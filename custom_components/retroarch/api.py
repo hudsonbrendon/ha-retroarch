@@ -7,6 +7,7 @@ import socket
 from dataclasses import dataclass, field
 
 from .const import (
+    CMD_GET_CONFIG_PARAM,
     CMD_GET_STATUS,
     CMD_READ_CORE_RAM,
     CMD_VERSION,
@@ -39,6 +40,7 @@ class RetroArchStatus:
     crc32: str | None = None
     version: str | None = None
     ram: dict[str, list[int]] = field(default_factory=dict)
+    config: dict[str, str] = field(default_factory=dict)
 
 
 def parse_status(response: str | None) -> RetroArchStatus:
@@ -149,6 +151,17 @@ class RetroArchClient:
         status = parse_status(response)
         status.available = response is not None
         return status
+
+    async def async_get_config_param(self, name: str) -> str | None:
+        """Return a retroarch.cfg parameter value, or None if unavailable."""
+        response = await self.query(f"{CMD_GET_CONFIG_PARAM} {name}")
+        if not response:
+            return None
+        # Response: "GET_CONFIG_PARAM <name> <value>"
+        prefix = f"{CMD_GET_CONFIG_PARAM} {name} "
+        if response.startswith(prefix):
+            return response[len(prefix):].strip() or None
+        return None
 
     async def async_read_memory(self, address: int, size: int) -> list[int] | None:
         """Read `size` bytes from core RAM at `address`. None if unsupported/timeout."""
