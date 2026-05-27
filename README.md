@@ -32,18 +32,18 @@ values, box art, and LAN auto-discovery.
 - 📊 **Sensors** — status, current game, system/core, content CRC32, and RetroArch version.
 - 🧠 **Configurable RAM sensors** — read live in-game values (lives, score, HP…) by
   memory address via the options flow.
-- 🔘 **Binary sensors** — playing, paused, and content-loaded.
+- 🔘 **Binary sensors** — playing, paused, content-loaded, menu open, replay active, and RetroAchievements enabled.
 - 🕹️ **Buttons** — 34 control commands: reset, pause/resume, save/load state, state
   slot ±, screenshot, fast forward, rewind, slow motion, AI service, menu, close content,
   quit, disk eject/next/prev, shader next/prev/toggle, cheat toggle/index ±, volume ±,
   recording/streaming toggle, and FPS/statistics/game-focus/grab-mouse/run-ahead/VRR toggles.
-- 🎚️ **Switches** (optimistic) — fast forward, slow motion, mute, fullscreen, and pause.
+- 🎚️ **Switches** — fullscreen and pause reflect RetroArch's real state; fast forward, slow motion, and mute are optimistic (the protocol only toggles them).
 - 🛠️ **Services** — `send_command`, `read_memory` (returns data), `write_memory`,
   `show_message`, `load_state_slot`, `set_shader`, and `load_core`.
 - 🔍 **Auto-discovery** — finds RetroArch instances on your LAN via a UDP `VERSION`
   broadcast probe, with manual host/port entry as a fallback.
-- 🩺 **Diagnostics** — driver sensors (video/audio/menu) plus downloadable config-entry
-  diagnostics.
+- 🩺 **Diagnostics** — netplay nickname and RetroArch directory sensors (disabled by
+  default) plus downloadable config-entry diagnostics.
 - 🏠 **Local polling** — no cloud; talks straight to RetroArch on your network.
 - 🌐 **Localized** — UI, entities, and services translated to English, Português (Brasil), and Español.
 
@@ -107,7 +107,7 @@ You can later change the host/port without removing the integration via **Config
 | `sensor.retroarch_system` | Current system / core |
 | `sensor.retroarch_content_crc32` | Content CRC32 (diagnostic) |
 | `sensor.retroarch_version` | RetroArch version (diagnostic) |
-| `sensor.retroarch_video_driver` · `_audio_driver` · `_menu_driver` | Drivers via `GET_CONFIG_PARAM` (diagnostic) |
+| `sensor.retroarch_netplay_nickname` + directory sensors | Netplay nickname and save/state/system/cache/log directories via `GET_CONFIG_PARAM` (diagnostic, disabled by default) |
 | `sensor.retroarch_<name>` | One per configured RAM sensor |
 
 ### Binary sensors
@@ -117,13 +117,18 @@ You can later change the host/port without removing the integration via **Config
 | `binary_sensor.retroarch_playing` | On while a game is running |
 | `binary_sensor.retroarch_paused` | On while paused |
 | `binary_sensor.retroarch_content_loaded` | On when content is loaded (diagnostic) |
+| `binary_sensor.retroarch_menu_open` | On while the RetroArch menu is open |
+| `binary_sensor.retroarch_replay_active` | On while a replay is recording/playing |
+| `binary_sensor.retroarch_retroachievements` | On when RetroAchievements is enabled (diagnostic) |
 
-### Switches (optimistic)
+### Switches
 
 Fast forward · Slow motion · Mute · Fullscreen · Pause.
 
-> RetroArch only exposes *toggle* commands and doesn't report these states, so a switch
-> sends a command only when the requested state differs from its assumed state.
+> **Fullscreen** and **Pause** reflect RetroArch's real state (read from `video_fullscreen`
+> and the play/pause status). The other three are optimistic — RetroArch only exposes
+> *toggle* commands for them and doesn't report their state, so they send a command only
+> when the requested state differs from the assumed one.
 
 ### Buttons
 
