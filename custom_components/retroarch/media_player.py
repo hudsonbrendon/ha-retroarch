@@ -1,6 +1,8 @@
 """Media player platform for RetroArch."""
 from __future__ import annotations
 
+from datetime import datetime
+
 from homeassistant.components.media_player import (
     MediaPlayerEntity,
     MediaPlayerEntityFeature,
@@ -9,6 +11,7 @@ from homeassistant.components.media_player import (
 )
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.util import dt as dt_util
 
 from .const import CONF_BOX_ART_ENABLED, CONF_BOX_ART_SYSTEM, STATE_PAUSED, STATE_PLAYING
 from .thumbnails import boxart_url
@@ -66,6 +69,40 @@ class RetroArchMediaPlayer(RetroArchEntity, MediaPlayerEntity):
         data = self.coordinator.data
         return boxart_url(data.system, data.game, options.get(CONF_BOX_ART_SYSTEM) or None)
 
+    @property
+    def volume_level(self) -> float | None:
+        """Real output volume from RetroArch's audio_volume (dB), as a 0..1 fraction."""
+        raw = self.coordinator.data.config.get("audio_volume")
+        if raw is None:
+            return None
+        try:
+            db = float(raw)
+        except ValueError:
+            return None
+        # Convert dB gain to a linear amplitude and clamp to 0..1.
+        return max(0.0, min(1.0, 10 ** (db / 20)))
+
+    @property
+    def is_volume_muted(self) -> bool | None:
+        raw = self.coordinator.data.config.get("audio_mute_enable")
+        if raw is None:
+            return None
+        return raw == "true"
+
+    @property
+    def media_position(self) -> int | None:
+        """Seconds elapsed in the current session (best-effort, no fixed duration)."""
+        since: datetime | None = self.coordinator.playing_since
+        if since is None or self.coordinator.data.state != STATE_PLAYING:
+            return None
+        return max(0, int((dt_util.utcnow() - since).total_seconds()))
+
+    @property
+    def media_position_updated_at(self) -> datetime | None:
+        if self.coordinator.playing_since is None:
+            return None
+        return dt_util.utcnow()
+
     async def async_media_play(self) -> None:
         if self.coordinator.data.state == STATE_PAUSED:
             await self.coordinator.client.send_command("PAUSE_TOGGLE")
@@ -78,8 +115,12 @@ class RetroArchMediaPlayer(RetroArchEntity, MediaPlayerEntity):
         await self.coordinator.client.send_command("CLOSE_CONTENT")
 
     async def async_mute_volume(self, mute: bool) -> None:
-        # RetroArch only exposes a mute TOGGLE; the desired `mute` state can't be set directly.
+        # RetroArch only exposes a mute TOGGLE. When it reports the real state via
+        # audio_mute_enable, only toggle if it differs from what was requested.
+        if self.is_volume_muted is mute:
+            return
         await self.coordinator.client.send_command("MUTE")
+        await self.coordinator.async_request_refresh()
 
     async def async_volume_up(self) -> None:
         await self.coordinator.client.send_command("VOLUME_UP")

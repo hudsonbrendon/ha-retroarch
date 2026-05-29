@@ -50,6 +50,76 @@ write_memory:
       selector:
         object:
 
+read_memory_map:
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: retroarch
+    address:
+      required: true
+      example: "8000"
+      selector:
+        text:
+    size:
+      required: true
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 256
+          mode: box
+
+write_memory_map:
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: retroarch
+    address:
+      required: true
+      example: "8000"
+      selector:
+        text:
+    data:
+      required: true
+      example: "[10, 255]"
+      selector:
+        object:
+
+save_files:
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: retroarch
+
+load_files:
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: retroarch
+
+play_replay_slot:
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: retroarch
+    slot:
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 999
+          mode: box
+
 show_message:
   fields:
     config_entry_id:

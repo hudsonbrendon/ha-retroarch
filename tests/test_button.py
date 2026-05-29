@@ -48,3 +48,33 @@ async def test_screenshot_button_press(hass):
             "button", "press", {"entity_id": "button.retroarch_screenshot"}, blocking=True
         )
     mock_send.assert_awaited_once_with("SCREENSHOT")
+
+
+async def test_save_files_button_press(hass):
+    entry = await _setup(hass)
+    coordinator = entry.runtime_data
+    with patch.object(coordinator.client, "send_command", new=AsyncMock()) as mock_send:
+        await hass.services.async_call(
+            "button", "press", {"entity_id": "button.retroarch_save_sram_to_disk"}, blocking=True
+        )
+    mock_send.assert_awaited_once_with("SAVE_FILES")
+
+
+async def test_menu_down_button_press(hass):
+    entry = await _setup(hass)
+    coordinator = entry.runtime_data
+    with patch.object(coordinator.client, "send_command", new=AsyncMock()) as mock_send:
+        await hass.services.async_call(
+            "button", "press", {"entity_id": "button.retroarch_menu_down"}, blocking=True
+        )
+    mock_send.assert_awaited_once_with("MENU_DOWN")
+
+
+async def test_play_replay_button_press(hass):
+    entry = await _setup(hass)
+    coordinator = entry.runtime_data
+    with patch.object(coordinator.client, "send_command", new=AsyncMock()) as mock_send:
+        await hass.services.async_call(
+            "button", "press", {"entity_id": "button.retroarch_play_replay"}, blocking=True
+        )
+    mock_send.assert_awaited_once_with("PLAY_REPLAY")

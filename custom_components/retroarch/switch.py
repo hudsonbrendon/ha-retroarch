@@ -27,7 +27,13 @@ class RetroArchSwitchDescription(SwitchEntityDescription):
 SWITCHES: tuple[RetroArchSwitchDescription, ...] = (
     RetroArchSwitchDescription(key="fast_forward", command="FAST_FORWARD"),
     RetroArchSwitchDescription(key="slow_motion", command="SLOWMOTION"),
-    RetroArchSwitchDescription(key="mute", command="MUTE"),
+    RetroArchSwitchDescription(
+        key="mute",
+        command="MUTE",
+        state_fn=lambda data: (data.config.get("audio_mute_enable") == "true")
+        if "audio_mute_enable" in data.config
+        else None,
+    ),
     RetroArchSwitchDescription(
         key="fullscreen",
         command="FULLSCREEN_TOGGLE",

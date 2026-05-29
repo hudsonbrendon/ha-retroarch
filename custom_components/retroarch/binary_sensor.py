@@ -52,6 +52,11 @@ BINARY_SENSORS: tuple[RetroArchBinaryDescription, ...] = (
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda data: data.config.get("cheevos_enable") == "true",
     ),
+    RetroArchBinaryDescription(
+        key="retroachievements_hardcore",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda data: data.config.get("cheevos_hardcore_mode_enable") == "true",
+    ),
 )
 
 

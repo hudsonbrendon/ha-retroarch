@@ -70,6 +70,12 @@ CONFIG_SENSORS: tuple[SensorEntityDescription, ...] = (
     SensorEntityDescription(key="cache_directory", entity_category=EntityCategory.DIAGNOSTIC, entity_registry_enabled_default=False),
     SensorEntityDescription(key="log_dir", entity_category=EntityCategory.DIAGNOSTIC, entity_registry_enabled_default=False),
     SensorEntityDescription(key="runtime_log_directory", entity_category=EntityCategory.DIAGNOSTIC, entity_registry_enabled_default=False),
+    SensorEntityDescription(key="cheevos_username", entity_category=EntityCategory.DIAGNOSTIC, entity_registry_enabled_default=False),
+    SensorEntityDescription(key="video_driver", entity_category=EntityCategory.DIAGNOSTIC, entity_registry_enabled_default=False),
+    SensorEntityDescription(key="audio_driver", entity_category=EntityCategory.DIAGNOSTIC, entity_registry_enabled_default=False),
+    SensorEntityDescription(key="input_driver", entity_category=EntityCategory.DIAGNOSTIC, entity_registry_enabled_default=False),
+    SensorEntityDescription(key="fastforward_ratio", entity_category=EntityCategory.DIAGNOSTIC, entity_registry_enabled_default=False),
+    SensorEntityDescription(key="slowmotion_ratio", entity_category=EntityCategory.DIAGNOSTIC, entity_registry_enabled_default=False),
 )
 
 

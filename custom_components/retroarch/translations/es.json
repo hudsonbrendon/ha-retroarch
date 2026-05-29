@@ -79,7 +79,8 @@
           "signed": "Valor con signo",
           "big_endian": "Orden de bytes big-endian",
           "scale": "Factor de escala",
-          "unit": "Unidad de medida"
+          "unit": "Unidad de medida",
+          "memory_map": "Usar mapa de memoria del sistema (READ_CORE_MEMORY)"
         }
       },
       "remove_ram_sensor": {
@@ -127,6 +128,24 @@
       },
       "runtime_log_directory": {
         "name": "Carpeta de registros de ejecución"
+      },
+      "cheevos_username": {
+        "name": "Usuario de RetroAchievements"
+      },
+      "video_driver": {
+        "name": "Controlador de video"
+      },
+      "audio_driver": {
+        "name": "Controlador de audio"
+      },
+      "input_driver": {
+        "name": "Controlador de entrada"
+      },
+      "fastforward_ratio": {
+        "name": "Relación de avance rápido"
+      },
+      "slowmotion_ratio": {
+        "name": "Relación de cámara lenta"
       }
     },
     "binary_sensor": {
@@ -147,6 +166,9 @@
       },
       "retroachievements": {
         "name": "RetroAchievements"
+      },
+      "retroachievements_hardcore": {
+        "name": "RetroAchievements hardcore"
       }
     },
     "button": {
@@ -251,6 +273,84 @@
       },
       "vrr_runloop_toggle": {
         "name": "Alternar bucle VRR"
+      },
+      "preempt_toggle": {
+        "name": "Alternar fotogramas preventivos"
+      },
+      "turbo_fire_toggle": {
+        "name": "Alternar turbo"
+      },
+      "ui_companion_toggle": {
+        "name": "Alternar menú de escritorio"
+      },
+      "save_files": {
+        "name": "Guardar SRAM en disco"
+      },
+      "load_files": {
+        "name": "Cargar SRAM desde disco"
+      },
+      "menu_up": {
+        "name": "Menú arriba"
+      },
+      "menu_down": {
+        "name": "Menú abajo"
+      },
+      "menu_left": {
+        "name": "Menú izquierda"
+      },
+      "menu_right": {
+        "name": "Menú derecha"
+      },
+      "menu_a": {
+        "name": "Menú confirmar"
+      },
+      "menu_b": {
+        "name": "Menú atrás"
+      },
+      "osk": {
+        "name": "Teclado en pantalla"
+      },
+      "overlay_next": {
+        "name": "Siguiente overlay"
+      },
+      "play_replay": {
+        "name": "Reproducir repetición"
+      },
+      "record_replay": {
+        "name": "Grabar repetición"
+      },
+      "halt_replay": {
+        "name": "Detener repetición"
+      },
+      "replay_slot_plus": {
+        "name": "Ranura de repetición +"
+      },
+      "replay_slot_minus": {
+        "name": "Ranura de repetición -"
+      },
+      "save_replay_checkpoint": {
+        "name": "Guardar punto de repetición"
+      },
+      "prev_replay_checkpoint": {
+        "name": "Punto de repetición anterior"
+      },
+      "next_replay_checkpoint": {
+        "name": "Siguiente punto de repetición"
+      },
+      "netplay_host_toggle": {
+        "name": "Alternar anfitrión netplay"
+      },
+      "netplay_ping_toggle": {
+        "name": "Alternar ping netplay"
+      },
+      "netplay_game_watch": {
+        "name": "Alternar espectador netplay"
+      },
+      "netplay_player_chat": {
+        "name": "Chat de jugador netplay"
+      },
+      "netplay_fade_chat_toggle": {
+        "name": "Alternar desvanecer chat netplay"
       }
     },
     "switch": {
@@ -268,6 +368,16 @@
       },
       "pause": {
         "name": "Pausar"
+      }
+    },
+    "number": {
+      "state_slot": {
+        "name": "Ranura de estado"
+      }
+    },
+    "update": {
+      "retroarch": {
+        "name": "RetroArch"
       }
     }
   },
@@ -375,6 +485,76 @@
         "path": {
           "name": "Ruta",
           "description": "Ruta del archivo del núcleo."
+        }
+      }
+    },
+    "read_memory_map": {
+      "name": "Leer memoria (mapa del sistema)",
+      "description": "Lee bytes mediante el mapa de memoria del sistema del core en una dirección hex; devuelve los datos.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integración",
+          "description": "Instancia de RetroArch a controlar."
+        },
+        "address": {
+          "name": "Dirección (hex)",
+          "description": "Dirección de memoria en hexadecimal, p. ej. 8000."
+        },
+        "size": {
+          "name": "Bytes",
+          "description": "Número de bytes a leer."
+        }
+      }
+    },
+    "write_memory_map": {
+      "name": "Escribir memoria (mapa del sistema)",
+      "description": "Escribe bytes mediante el mapa de memoria del sistema del core en una dirección hex.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integración",
+          "description": "Instancia de RetroArch a controlar."
+        },
+        "address": {
+          "name": "Dirección (hex)",
+          "description": "Dirección de memoria en hexadecimal, p. ej. 8000."
+        },
+        "data": {
+          "name": "Datos",
+          "description": "Lista de valores de bytes (0-255) a escribir."
+        }
+      }
+    },
+    "save_files": {
+      "name": "Guardar archivos SRAM",
+      "description": "Vuelca toda la SRAM (guardados de batería) al disco.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integración",
+          "description": "Instancia de RetroArch a controlar."
+        }
+      }
+    },
+    "load_files": {
+      "name": "Cargar archivos SRAM",
+      "description": "Recarga toda la SRAM (guardados de batería) desde el disco.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integración",
+          "description": "Instancia de RetroArch a controlar."
+        }
+      }
+    },
+    "play_replay_slot": {
+      "name": "Reproducir ranura de repetición",
+      "description": "Reproduce la repetición de una ranura específica.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integración",
+          "description": "Instancia de RetroArch a controlar."
+        },
+        "slot": {
+          "name": "Ranura",
+          "description": "Número de ranura de repetición."
         }
       }
     }

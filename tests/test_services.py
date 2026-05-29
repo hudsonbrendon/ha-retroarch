@@ -76,3 +76,50 @@ async def test_show_message_service(hass):
             blocking=True,
         )
     mock_send.assert_awaited_once_with("SHOW_MSG Hello")
+
+
+async def test_read_memory_map_service_returns_data(hass):
+    entry = await _setup(hass)
+    coordinator = entry.runtime_data
+    with patch.object(coordinator.client, "async_read_memory_map", new=AsyncMock(return_value=[1, 2])):
+        result = await hass.services.async_call(
+            DOMAIN, "read_memory_map",
+            {"config_entry_id": entry.entry_id, "address": "8000", "size": 2},
+            blocking=True, return_response=True,
+        )
+    assert result["data"] == [1, 2]
+    assert result["hex"] == "01 02"
+
+
+async def test_write_memory_map_service(hass):
+    entry = await _setup(hass)
+    coordinator = entry.runtime_data
+    with patch.object(coordinator.client, "async_write_memory_map", new=AsyncMock()) as mock_write:
+        await hass.services.async_call(
+            DOMAIN, "write_memory_map",
+            {"config_entry_id": entry.entry_id, "address": "8000", "data": [1, 2]},
+            blocking=True,
+        )
+    mock_write.assert_awaited_once_with(0x8000, [1, 2])
+
+
+async def test_save_files_service(hass):
+    entry = await _setup(hass)
+    coordinator = entry.runtime_data
+    with patch.object(coordinator.client, "send_command", new=AsyncMock()) as mock_send:
+        await hass.services.async_call(
+            DOMAIN, "save_files", {"config_entry_id": entry.entry_id}, blocking=True
+        )
+    mock_send.assert_awaited_once_with("SAVE_FILES")
+
+
+async def test_play_replay_slot_service(hass):
+    entry = await _setup(hass)
+    coordinator = entry.runtime_data
+    with patch.object(coordinator.client, "send_command", new=AsyncMock()) as mock_send:
+        await hass.services.async_call(
+            DOMAIN, "play_replay_slot",
+            {"config_entry_id": entry.entry_id, "slot": 3},
+            blocking=True,
+        )
+    mock_send.assert_awaited_once_with("PLAY_REPLAY_SLOT 3")

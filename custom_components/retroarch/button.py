@@ -54,6 +54,36 @@ BUTTONS: tuple[RetroArchButtonDescription, ...] = (
     RetroArchButtonDescription(key="grab_mouse_toggle", command="GRAB_MOUSE_TOGGLE", entity_category=EntityCategory.CONFIG),
     RetroArchButtonDescription(key="runahead_toggle", command="RUNAHEAD_TOGGLE", entity_category=EntityCategory.CONFIG),
     RetroArchButtonDescription(key="vrr_runloop_toggle", command="VRR_RUNLOOP_TOGGLE", entity_category=EntityCategory.CONFIG),
+    RetroArchButtonDescription(key="preempt_toggle", command="PREEMPT_TOGGLE", entity_category=EntityCategory.CONFIG),
+    RetroArchButtonDescription(key="turbo_fire_toggle", command="TURBO_FIRE_TOGGLE", entity_category=EntityCategory.CONFIG),
+    RetroArchButtonDescription(key="ui_companion_toggle", command="UI_COMPANION_TOGGLE", entity_category=EntityCategory.CONFIG),
+    # --- SRAM files ---
+    RetroArchButtonDescription(key="save_files", command="SAVE_FILES"),
+    RetroArchButtonDescription(key="load_files", command="LOAD_FILES"),
+    # --- Menu navigation (lets automations drive the RetroArch menu) ---
+    RetroArchButtonDescription(key="menu_up", command="MENU_UP", entity_category=EntityCategory.CONFIG),
+    RetroArchButtonDescription(key="menu_down", command="MENU_DOWN", entity_category=EntityCategory.CONFIG),
+    RetroArchButtonDescription(key="menu_left", command="MENU_LEFT", entity_category=EntityCategory.CONFIG),
+    RetroArchButtonDescription(key="menu_right", command="MENU_RIGHT", entity_category=EntityCategory.CONFIG),
+    RetroArchButtonDescription(key="menu_a", command="MENU_A", entity_category=EntityCategory.CONFIG),
+    RetroArchButtonDescription(key="menu_b", command="MENU_B", entity_category=EntityCategory.CONFIG),
+    RetroArchButtonDescription(key="osk", command="OSK", entity_category=EntityCategory.CONFIG),
+    RetroArchButtonDescription(key="overlay_next", command="OVERLAY_NEXT", entity_category=EntityCategory.CONFIG),
+    # --- Replay ---
+    RetroArchButtonDescription(key="play_replay", command="PLAY_REPLAY"),
+    RetroArchButtonDescription(key="record_replay", command="RECORD_REPLAY"),
+    RetroArchButtonDescription(key="halt_replay", command="HALT_REPLAY"),
+    RetroArchButtonDescription(key="replay_slot_plus", command="REPLAY_SLOT_PLUS"),
+    RetroArchButtonDescription(key="replay_slot_minus", command="REPLAY_SLOT_MINUS"),
+    RetroArchButtonDescription(key="save_replay_checkpoint", command="SAVE_REPLAY_CHECKPOINT"),
+    RetroArchButtonDescription(key="prev_replay_checkpoint", command="PREV_REPLAY_CHECKPOINT"),
+    RetroArchButtonDescription(key="next_replay_checkpoint", command="NEXT_REPLAY_CHECKPOINT"),
+    # --- Netplay ---
+    RetroArchButtonDescription(key="netplay_host_toggle", command="NETPLAY_HOST_TOGGLE", entity_category=EntityCategory.CONFIG),
+    RetroArchButtonDescription(key="netplay_ping_toggle", command="NETPLAY_PING_TOGGLE", entity_category=EntityCategory.CONFIG),
+    RetroArchButtonDescription(key="netplay_game_watch", command="NETPLAY_GAME_WATCH", entity_category=EntityCategory.CONFIG),
+    RetroArchButtonDescription(key="netplay_player_chat", command="NETPLAY_PLAYER_CHAT", entity_category=EntityCategory.CONFIG),
+    RetroArchButtonDescription(key="netplay_fade_chat_toggle", command="NETPLAY_FADE_CHAT_TOGGLE", entity_category=EntityCategory.CONFIG),
 )
 
 

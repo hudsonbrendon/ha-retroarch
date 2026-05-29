@@ -105,3 +105,37 @@ async def test_media_image_disabled(hass):
     await _setup_with_options(hass, status, {CONF_BOX_ART_ENABLED: False})
     state = hass.states.get("media_player.retroarch")
     assert "entity_picture" not in state.attributes
+
+
+async def test_media_player_real_volume_and_mute(hass):
+    status = RetroArchStatus(
+        available=True, state="playing", system="nes", game="Metroid",
+        config={"audio_volume": "0.0", "audio_mute_enable": "true"},
+    )
+    await _setup(hass, status)
+    state = hass.states.get("media_player.retroarch")
+    # 0 dB gain maps to full scale.
+    assert state.attributes["volume_level"] == 1.0
+    assert state.attributes["is_volume_muted"] is True
+
+
+async def test_media_player_mute_skips_when_already_muted(hass):
+    status = RetroArchStatus(
+        available=True, state="playing", game="X", config={"audio_mute_enable": "true"}
+    )
+    entry = await _setup(hass, status)
+    coordinator = entry.runtime_data
+    with patch.object(coordinator.client, "send_command", new=AsyncMock()) as mock_send:
+        await hass.services.async_call(
+            "media_player", "volume_mute",
+            {"entity_id": "media_player.retroarch", "is_volume_muted": True},
+            blocking=True,
+        )
+    mock_send.assert_not_called()
+
+
+async def test_media_player_reports_position_while_playing(hass):
+    status = RetroArchStatus(available=True, state="playing", system="nes", game="Metroid")
+    await _setup(hass, status)
+    state = hass.states.get("media_player.retroarch")
+    assert "media_position" in state.attributes

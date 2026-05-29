@@ -9,8 +9,10 @@ from dataclasses import dataclass, field
 from .const import (
     CMD_GET_CONFIG_PARAM,
     CMD_GET_STATUS,
+    CMD_READ_CORE_MEMORY,
     CMD_READ_CORE_RAM,
     CMD_VERSION,
+    CMD_WRITE_CORE_MEMORY,
     CMD_WRITE_CORE_RAM,
     DEFAULT_PORT,
     DEFAULT_TIMEOUT,
@@ -163,27 +165,41 @@ class RetroArchClient:
             return response[len(prefix):].strip() or None
         return None
 
-    async def async_read_memory(self, address: int, size: int) -> list[int] | None:
-        """Read `size` bytes from core RAM at `address`. None if unsupported/timeout."""
-        response = await self.query(f"{CMD_READ_CORE_RAM} {address:x} {size}")
+    async def _read_memory(self, command: str, address: int, size: int) -> list[int] | None:
+        """Read `size` bytes via `command` (READ_CORE_RAM or READ_CORE_MEMORY)."""
+        response = await self.query(f"{command} {address:x} {size}")
         if not response:
             return None
         tokens = response.split()
-        # Expect: READ_CORE_RAM <addr> <b0> <b1> ...
-        if len(tokens) < 3 or tokens[0] != CMD_READ_CORE_RAM:
+        # Expect: <command> <addr> <b0> <b1> ...
+        if len(tokens) < 3 or tokens[0] != command:
             return None
         byte_tokens = tokens[2:]
-        if byte_tokens == ["-1"]:
+        # An error reply looks like "<command> <addr> -1 <reason...>".
+        if byte_tokens and byte_tokens[0] == "-1":
             return None
         try:
             return [int(token, 16) for token in byte_tokens]
         except ValueError:
             return None
 
+    async def async_read_memory(self, address: int, size: int) -> list[int] | None:
+        """Read `size` bytes from core RAM at `address`. None if unsupported/timeout."""
+        return await self._read_memory(CMD_READ_CORE_RAM, address, size)
+
+    async def async_read_memory_map(self, address: int, size: int) -> list[int] | None:
+        """Read `size` bytes via the core's system memory map. None if unsupported."""
+        return await self._read_memory(CMD_READ_CORE_MEMORY, address, size)
+
     async def async_write_memory(self, address: int, data: list[int]) -> None:
         """Write bytes to core RAM at `address` (fire-and-forget)."""
         payload = " ".join(f"{byte & 0xFF:x}" for byte in data)
         await self.send_command(f"{CMD_WRITE_CORE_RAM} {address:x} {payload}")
+
+    async def async_write_memory_map(self, address: int, data: list[int]) -> None:
+        """Write bytes via the core's system memory map (fire-and-forget)."""
+        payload = " ".join(f"{byte & 0xFF:x}" for byte in data)
+        await self.send_command(f"{CMD_WRITE_CORE_MEMORY} {address:x} {payload}")
 
     def close(self) -> None:
         """Close the UDP transport."""

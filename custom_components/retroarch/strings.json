@@ -79,7 +79,8 @@
           "signed": "Signed value",
           "big_endian": "Big-endian byte order",
           "scale": "Scale factor",
-          "unit": "Unit of measurement"
+          "unit": "Unit of measurement",
+          "memory_map": "Use system memory map (READ_CORE_MEMORY)"
         }
       },
       "remove_ram_sensor": {
@@ -127,6 +128,24 @@
       },
       "runtime_log_directory": {
         "name": "Runtime log directory"
+      },
+      "cheevos_username": {
+        "name": "RetroAchievements username"
+      },
+      "video_driver": {
+        "name": "Video driver"
+      },
+      "audio_driver": {
+        "name": "Audio driver"
+      },
+      "input_driver": {
+        "name": "Input driver"
+      },
+      "fastforward_ratio": {
+        "name": "Fast forward ratio"
+      },
+      "slowmotion_ratio": {
+        "name": "Slow motion ratio"
       }
     },
     "binary_sensor": {
@@ -147,6 +166,9 @@
       },
       "retroachievements": {
         "name": "RetroAchievements"
+      },
+      "retroachievements_hardcore": {
+        "name": "RetroAchievements hardcore"
       }
     },
     "button": {
@@ -251,6 +273,84 @@
       },
       "vrr_runloop_toggle": {
         "name": "VRR runloop toggle"
+      },
+      "preempt_toggle": {
+        "name": "Preemptive frames toggle"
+      },
+      "turbo_fire_toggle": {
+        "name": "Turbo fire toggle"
+      },
+      "ui_companion_toggle": {
+        "name": "Desktop menu toggle"
+      },
+      "save_files": {
+        "name": "Save SRAM to disk"
+      },
+      "load_files": {
+        "name": "Load SRAM from disk"
+      },
+      "menu_up": {
+        "name": "Menu up"
+      },
+      "menu_down": {
+        "name": "Menu down"
+      },
+      "menu_left": {
+        "name": "Menu left"
+      },
+      "menu_right": {
+        "name": "Menu right"
+      },
+      "menu_a": {
+        "name": "Menu confirm"
+      },
+      "menu_b": {
+        "name": "Menu back"
+      },
+      "osk": {
+        "name": "On-screen keyboard"
+      },
+      "overlay_next": {
+        "name": "Next overlay"
+      },
+      "play_replay": {
+        "name": "Play replay"
+      },
+      "record_replay": {
+        "name": "Record replay"
+      },
+      "halt_replay": {
+        "name": "Halt replay"
+      },
+      "replay_slot_plus": {
+        "name": "Replay slot +"
+      },
+      "replay_slot_minus": {
+        "name": "Replay slot -"
+      },
+      "save_replay_checkpoint": {
+        "name": "Save replay checkpoint"
+      },
+      "prev_replay_checkpoint": {
+        "name": "Previous replay checkpoint"
+      },
+      "next_replay_checkpoint": {
+        "name": "Next replay checkpoint"
+      },
+      "netplay_host_toggle": {
+        "name": "Netplay host toggle"
+      },
+      "netplay_ping_toggle": {
+        "name": "Netplay ping toggle"
+      },
+      "netplay_game_watch": {
+        "name": "Netplay spectate toggle"
+      },
+      "netplay_player_chat": {
+        "name": "Netplay player chat"
+      },
+      "netplay_fade_chat_toggle": {
+        "name": "Netplay fade chat toggle"
       }
     },
     "switch": {
@@ -268,6 +368,16 @@
       },
       "pause": {
         "name": "Pause"
+      }
+    },
+    "number": {
+      "state_slot": {
+        "name": "State slot"
+      }
+    },
+    "update": {
+      "retroarch": {
+        "name": "RetroArch"
       }
     }
   },
@@ -375,6 +485,76 @@
         "path": {
           "name": "Path",
           "description": "Core file path."
+        }
+      }
+    },
+    "read_memory_map": {
+      "name": "Read memory (system map)",
+      "description": "Read bytes via the core's system memory map at a hex address; returns the data.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integration",
+          "description": "RetroArch instance to target."
+        },
+        "address": {
+          "name": "Address (hex)",
+          "description": "Memory address in hexadecimal, e.g. 8000."
+        },
+        "size": {
+          "name": "Bytes",
+          "description": "Number of bytes to read."
+        }
+      }
+    },
+    "write_memory_map": {
+      "name": "Write memory (system map)",
+      "description": "Write bytes via the core's system memory map at a hex address.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integration",
+          "description": "RetroArch instance to target."
+        },
+        "address": {
+          "name": "Address (hex)",
+          "description": "Memory address in hexadecimal, e.g. 8000."
+        },
+        "data": {
+          "name": "Data",
+          "description": "List of byte values (0-255) to write."
+        }
+      }
+    },
+    "save_files": {
+      "name": "Save SRAM files",
+      "description": "Flush all SRAM (battery saves) to disk.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integration",
+          "description": "RetroArch instance to target."
+        }
+      }
+    },
+    "load_files": {
+      "name": "Load SRAM files",
+      "description": "Reload all SRAM (battery saves) from disk.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integration",
+          "description": "RetroArch instance to target."
+        }
+      }
+    },
+    "play_replay_slot": {
+      "name": "Play replay slot",
+      "description": "Play the replay in a specific slot.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integration",
+          "description": "RetroArch instance to target."
+        },
+        "slot": {
+          "name": "Slot",
+          "description": "Replay slot number."
         }
       }
     }

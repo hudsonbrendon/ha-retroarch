@@ -20,6 +20,7 @@ from .const import (
     CONF_BOX_ART_SYSTEM,
     CONF_RAM_ADDRESS,
     CONF_RAM_BIG_ENDIAN,
+    CONF_RAM_MEMORY_MAP,
     CONF_RAM_NAME,
     CONF_RAM_SCALE,
     CONF_RAM_SENSORS,
@@ -216,6 +217,7 @@ class RetroArchOptionsFlow(OptionsFlow):
                     CONF_RAM_BIG_ENDIAN: user_input.get(CONF_RAM_BIG_ENDIAN, False),
                     CONF_RAM_SCALE: user_input.get(CONF_RAM_SCALE, 1.0),
                     CONF_RAM_UNIT: user_input.get(CONF_RAM_UNIT, ""),
+                    CONF_RAM_MEMORY_MAP: user_input.get(CONF_RAM_MEMORY_MAP, False),
                 }
             )
             return self._save({CONF_RAM_SENSORS: sensors})
@@ -229,6 +231,7 @@ class RetroArchOptionsFlow(OptionsFlow):
                 vol.Optional(CONF_RAM_BIG_ENDIAN, default=False): bool,
                 vol.Optional(CONF_RAM_SCALE, default=1.0): vol.Coerce(float),
                 vol.Optional(CONF_RAM_UNIT, default=""): str,
+                vol.Optional(CONF_RAM_MEMORY_MAP, default=False): bool,
             }
         )
         return self.async_show_form(step_id="add_ram_sensor", data_schema=schema)

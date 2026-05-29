@@ -131,6 +131,23 @@ async def test_write_memory_encodes_bytes():
     assert transport.sent == [b"WRITE_CORE_RAM 7e0019 a ff"]
 
 
+async def test_read_memory_map_parses_hex_bytes():
+    client, transport = _wire_client(b"READ_CORE_MEMORY 8000 0a 14")
+    assert await client.async_read_memory_map(0x8000, 2) == [0x0A, 0x14]
+    assert transport.sent == [b"READ_CORE_MEMORY 8000 2"]
+
+
+async def test_read_memory_map_returns_none_on_error():
+    client, _ = _wire_client(b"READ_CORE_MEMORY 8000 -1 no core")
+    assert await client.async_read_memory_map(0x8000, 2) is None
+
+
+async def test_write_memory_map_encodes_bytes():
+    client, transport = _wire_client(None)
+    await client.async_write_memory_map(0x8000, [0x0A, 0xFF])
+    assert transport.sent == [b"WRITE_CORE_MEMORY 8000 a ff"]
+
+
 from unittest.mock import AsyncMock, MagicMock, patch
 
 from custom_components.retroarch import api as ra_api

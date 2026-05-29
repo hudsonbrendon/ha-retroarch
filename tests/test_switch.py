@@ -84,6 +84,12 @@ async def test_pause_switch_on_when_paused(hass):
     assert hass.states.get("switch.retroarch_pause").state == "on"
 
 
+async def test_mute_switch_on_when_config_true(hass):
+    status = RetroArchStatus(available=True, state="playing", game="X", config={"audio_mute_enable": "true"})
+    await _setup_status(hass, status)
+    assert hass.states.get("switch.retroarch_mute").state == "on"
+
+
 async def test_pause_switch_turn_off_resumes(hass):
     status = RetroArchStatus(available=True, state="paused", game="X")
     entry = await _setup_status(hass, status)
