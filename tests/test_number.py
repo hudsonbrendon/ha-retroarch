@@ -40,7 +40,11 @@ async def test_state_slot_steps_to_target(hass):
     status = RetroArchStatus(available=True, state="playing", game="X", config={"state_slot": "1"})
     entry = await _setup(hass, status)
     coordinator = entry.runtime_data
-    with patch.object(coordinator.client, "send_command", new=AsyncMock()) as mock_send:
+    with patch.object(
+        coordinator.client, "send_command", new=AsyncMock()
+    ) as mock_send, patch.object(
+        coordinator, "async_request_refresh", new=AsyncMock()
+    ):
         await hass.services.async_call(
             "number", "set_value",
             {"entity_id": "number.retroarch_state_slot", "value": 3},

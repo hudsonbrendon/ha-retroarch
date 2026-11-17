@@ -26,6 +26,9 @@ async def test_menu_then_manual_success(hass):
     with patch(
         "custom_components.retroarch.config_flow.RetroArchClient.async_get_version",
         new=AsyncMock(return_value="1.19.1"),
+    ), patch(
+        "custom_components.retroarch.async_setup_entry",
+        new=AsyncMock(return_value=True),
     ):
         result = await hass.config_entries.flow.async_configure(
             result["flow_id"], MOCK_CONFIG
@@ -72,6 +75,9 @@ async def test_discovery_flow_success(hass):
     with patch(
         "custom_components.retroarch.config_flow.RetroArchClient.async_get_version",
         new=AsyncMock(return_value="1.19.1"),
+    ), patch(
+        "custom_components.retroarch.async_setup_entry",
+        new=AsyncMock(return_value=True),
     ):
         result = await hass.config_entries.flow.async_configure(
             result["flow_id"],

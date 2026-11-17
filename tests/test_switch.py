@@ -94,7 +94,11 @@ async def test_pause_switch_turn_off_resumes(hass):
     status = RetroArchStatus(available=True, state="paused", game="X")
     entry = await _setup_status(hass, status)
     coordinator = entry.runtime_data
-    with patch.object(coordinator.client, "send_command", new=AsyncMock()) as mock_send:
+    with patch.object(
+        coordinator.client, "send_command", new=AsyncMock()
+    ) as mock_send, patch.object(
+        coordinator, "async_request_refresh", new=AsyncMock()
+    ):
         await hass.services.async_call(
             "switch", "turn_off", {"entity_id": "switch.retroarch_pause"}, blocking=True
         )
