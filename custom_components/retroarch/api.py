@@ -131,7 +131,7 @@ class RetroArchClient:
             self._transport.sendto(command.encode("utf-8"))
             try:
                 return await asyncio.wait_for(self._protocol.response_future, self._timeout)
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 return None
             except OSError as err:
                 _LOGGER.debug("UDP error querying %s: %s", command, err)

@@ -13,10 +13,15 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.util import dt as dt_util
 
-from .const import CONF_BOX_ART_ENABLED, CONF_BOX_ART_SYSTEM, STATE_PAUSED, STATE_PLAYING
-from .thumbnails import boxart_url
+from .const import (
+    CONF_BOX_ART_ENABLED,
+    CONF_BOX_ART_SYSTEM,
+    STATE_PAUSED,
+    STATE_PLAYING,
+)
 from .coordinator import RetroArchConfigEntry, RetroArchDataUpdateCoordinator
 from .entity import RetroArchEntity
+from .thumbnails import boxart_url
 
 
 async def async_setup_entry(

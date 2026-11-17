@@ -1,4 +1,18 @@
 <p align="center">
+  <img src="custom_components/retroarch/brand/logo@2x.png" alt="RetroArch" height="128">
+</p>
+
+# RetroArch
+
+[![Tests](https://github.com/hudsonbrendon/ha-retroarch/actions/workflows/tests.yml/badge.svg)](https://github.com/hudsonbrendon/ha-retroarch/actions/workflows/tests.yml)
+[![Hassfest](https://github.com/hudsonbrendon/ha-retroarch/actions/workflows/hassfest.yml/badge.svg)](https://github.com/hudsonbrendon/ha-retroarch/actions/workflows/hassfest.yml)
+[![HACS](https://github.com/hudsonbrendon/ha-retroarch/actions/workflows/validate.yml/badge.svg)](https://github.com/hudsonbrendon/ha-retroarch/actions/workflows/validate.yml)
+[![Release](https://img.shields.io/github/v/release/hudsonbrendon/ha-retroarch?sort=semver)](https://github.com/hudsonbrendon/ha-retroarch/releases)
+[![Downloads](https://img.shields.io/github/downloads/hudsonbrendon/ha-retroarch/total)](https://github.com/hudsonbrendon/ha-retroarch/releases)
+[![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/)
+[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2024.12.0%2B-18BCF2?logo=homeassistant&logoColor=white)](https://www.home-assistant.io/)
+[![License](https://img.shields.io/github/license/hudsonbrendon/ha-retroarch)](LICENSE)
+
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="custom_components/retroarch/brand/dark_logo.png">
     <img src="custom_components/retroarch/brand/logo.png" alt="RetroArch" width="420">
